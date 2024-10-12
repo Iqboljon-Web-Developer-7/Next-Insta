@@ -1,0 +1,11 @@
+{
+  "Header": {
+    "home": "Asosiy",
+    "about": "Biz haqimizda",
+    "login": "Ro'yhatdan o'tish"
+  },
+  "HomePage": {
+    "title": "Hello world!",
+    "about": "Go to the about page"
+  }
+}
