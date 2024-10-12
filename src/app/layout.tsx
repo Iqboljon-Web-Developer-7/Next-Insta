@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "@/scss/main.scss";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { unstable_setRequestLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,10 +17,14 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }>) {
-  const messages = await getMessages();
+  // Set the request locale for static rendering
+  unstable_setRequestLocale(locale);
+
+  // Pass the locale to getMessages to load the correct messages
+  const messages = await getMessages({ locale });
 
   return (
-    <NextIntlClientProvider messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages}>
       <html lang={locale}>
         <body>{children}</body>
       </html>
