@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import useSWR from "swr";
 import { useRouter } from "next/navigation";
 
 type ChangedData = {
