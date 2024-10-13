@@ -1,5 +1,5 @@
 {
-  "name": "next-1",
+  "name": "text-template",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -18,7 +18,6 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.452.0",
     "next": "^14.2.15",
-    "next-intl": "^3.21.1",
     "react": "^18",
     "react-confetti": "^6.1.0",
     "react-dom": "^18",
