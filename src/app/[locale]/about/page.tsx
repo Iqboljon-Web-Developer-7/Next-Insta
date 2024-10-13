@@ -1,6 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 
-const About = () => {
+import { unstable_setRequestLocale } from "next-intl/server";
+
+const About: FC<{ params: { locale: string } }> = ({ params: { locale } }) => {
+  unstable_setRequestLocale(locale);
+
   return <div className="about">About</div>;
 };
 

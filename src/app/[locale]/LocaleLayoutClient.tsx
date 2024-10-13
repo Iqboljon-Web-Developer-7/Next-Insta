@@ -8,7 +8,8 @@ export default function LocaleLayoutClient({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  if (pathname.startsWith("/auth")) {
+
+  if (pathname.split("/").includes("auth")) {
     return;
   }
   return <>{children}</>;

@@ -1,7 +1,11 @@
 "use client";
-import React from "react";
+import React, { FC } from "react";
 
-const page = () => {
+import { unstable_setRequestLocale } from "next-intl/server";
+
+const page: FC<{ params: { locale: string } }> = ({ params: { locale } }) => {
+  unstable_setRequestLocale(locale);
+
   return (
     <>
       <h1>

@@ -1,8 +1,12 @@
 import { ProfileForm } from "@/components/loginForm/Form";
 import { Link } from "@/i18n/routing";
-import React from "react";
+import React, { FC } from "react";
 
-const page = () => {
+import { unstable_setRequestLocale } from "next-intl/server";
+
+const page: FC<{ params: { locale: string } }> = ({ params: { locale } }) => {
+  unstable_setRequestLocale(locale);
+
   return (
     <div className="w-full md:w-1/2 flex flex-col justify-center p-8">
       <div className="max-w-[400px] mx-auto">
@@ -24,7 +28,6 @@ const page = () => {
       </div>
     </div>
   );
-  <div>login</div>;
 };
 
 export default page;
