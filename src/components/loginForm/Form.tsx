@@ -58,12 +58,6 @@ export function ProfileForm() {
     resolver: zodResolver(formSchema),
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // console.log(values);
-
-    // let changedData: ChangedData = {
-    //   username: values.username,
-    //   password: values.password,
-    // };
     fetcher(`${API_URL}/api/auth/login`, values);
   }
 
