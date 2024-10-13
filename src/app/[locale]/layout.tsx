@@ -5,6 +5,12 @@ import LocaleLayoutClient from "./LocaleLayoutClient";
 
 import { unstable_setRequestLocale } from "next-intl/server";
 
+import { routing } from "@/i18n/routing";
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
 // This component remains a Server Component
 export default async function LocaleLayout({
   children,

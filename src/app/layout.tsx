@@ -15,12 +15,9 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }>) {
-  // Only set the locale for static rendering if locale is provided
-  unstable_setRequestLocale(locale);
-
-  // Load messages if locale is available (else use fallback or empty object)
   const messages = locale ? await getMessages({ locale }) : {};
 
+  unstable_setRequestLocale(locale);
   return (
     <NextIntlClientProvider locale={locale || "en"} messages={messages}>
       <html lang={locale || "en"}>

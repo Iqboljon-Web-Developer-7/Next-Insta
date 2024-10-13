@@ -3,7 +3,6 @@
 import React, { FC } from "react";
 
 import { redirect } from "@/i18n/routing";
-import { unstable_setRequestLocale } from "next-intl/server";
 
 const Home: FC<{ params: { locale: string } }> = ({ params: { locale } }) => {
   try {
@@ -16,9 +15,7 @@ const Home: FC<{ params: { locale: string } }> = ({ params: { locale } }) => {
     redirect("/auth/register"); // Handle the error appropriately
   }
 
-  unstable_setRequestLocale(locale);
-
-  return <div>Homee</div>;
+  return <>Homee</>;
 };
 
 export default Home;

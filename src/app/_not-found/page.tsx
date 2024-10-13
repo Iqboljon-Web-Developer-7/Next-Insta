@@ -1,5 +1,3 @@
-// app/_not-found/page.tsx
-
 export default function NotFound() {
   return (
     <html lang="en">
