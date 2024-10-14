@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 
-import img from "@/app/assets/register/register-img.png";
+import img from "@/assets/register/register-img.png";
 
 const layout = ({
   children,

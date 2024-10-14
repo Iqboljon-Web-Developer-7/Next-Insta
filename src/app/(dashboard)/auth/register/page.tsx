@@ -1,4 +1,4 @@
-import { ProfileForm } from "@/components/registerForm/Form";
+import { ProfileForm } from "@/components/auth/registerForm/Form";
 import Link from "next/link";
 import React from "react";
 

@@ -1,12 +1,12 @@
 import React from "react";
-import Header from "@/components/header/Header";
+import Nav from "@/components/nav/Nav";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
-      <Header />
+    <div className="flex">
+      <Nav />
       <div>{children}</div>
-    </>
+    </div>
   );
 };
 

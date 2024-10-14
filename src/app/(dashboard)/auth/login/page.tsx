@@ -1,4 +1,4 @@
-import { ProfileForm } from "@/components/loginForm/Form";
+import { ProfileForm } from "@/components/auth/loginForm/Form";
 import Link from "next/link";
 import React, { FC } from "react";
 
