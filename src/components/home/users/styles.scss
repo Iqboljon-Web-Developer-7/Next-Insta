@@ -1,0 +1,10 @@
+.users__wrapper {
+  &::-webkit-scrollbar {
+    width: 0.1rem;
+    background-color: black;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background: #877effb9;
+  }
+}

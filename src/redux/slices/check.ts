@@ -3,11 +3,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const auth = createSlice({
   name: "auth",
-  initialState: { isAuthenticated: false, token: null },
+  initialState: {
+    isAuthenticated:
+      JSON.parse(localStorage.getItem("insta-isLogged")!) || false,
+    token: null,
+  },
   reducers: {
     logout: (state) => {
       state.isAuthenticated = false;
       state.token = null;
+      localStorage.setItem("insta-isLogged", JSON.stringify("false"));
     },
     login: (state, action) => {
       state.isAuthenticated = true;

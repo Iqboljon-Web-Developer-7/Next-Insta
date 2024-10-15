@@ -48,6 +48,7 @@ export function ProfileForm() {
           "insta-x-refreshToken",
           JSON.stringify(data.refreshToken)
         );
+        localStorage.setItem("insta-isLogged", JSON.stringify(true));
         router.push("/");
       })
       .catch((error) => {

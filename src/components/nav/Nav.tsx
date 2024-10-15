@@ -43,7 +43,7 @@ const Nav = () => {
   const router = useRouter();
 
   const [token, setToken] = useState("");
-  const { data, isError } = useGetUserProfileQuery({ token });
+  const { data, isError } = useGetUserProfileQuery("");
 
   isError && redirect("/auth/login");
 
