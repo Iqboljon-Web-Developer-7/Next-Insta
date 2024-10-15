@@ -13,14 +13,12 @@ const baseQuery: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  const { dispatch } = api;
   const rawBaseQuery = fetchBaseQuery({
-    baseUrl: "https://sea-turtle-app-c2icp.ondigitalocean.app",
+    baseUrl: "https://sea-turtle-app-c2icp.ondigitalocean.app/api",
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem("x-auth-token");
+      const token = localStorage.getItem("insta-x-token");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
-      } else {
       }
       return headers;
     },
@@ -32,7 +30,6 @@ const baseQuery: BaseQueryFn<
       console.error(
         "Unauthorized access - Redirecting to login...vaaaaaaaaaaaa"
       );
-      // dispatch(logout())
     }
   }
   return result;

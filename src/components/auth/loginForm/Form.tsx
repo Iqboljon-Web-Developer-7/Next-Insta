@@ -26,15 +26,10 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useLoginUserMutation } from "@/redux/api/auth/login";
 
-type ChangedData = {
-  username: string;
-  password: string;
-};
-
 export function ProfileForm() {
   const router = useRouter();
 
-  const [loginUser, { data, isLoading }] = useLoginUserMutation();
+  const [loginUser, { isLoading }] = useLoginUserMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
