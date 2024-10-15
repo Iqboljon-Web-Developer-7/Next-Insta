@@ -25,8 +25,12 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useLoginUserMutation } from "@/redux/api/auth/login";
+import { useDispatch } from "react-redux";
+import { login } from "@/redux/slices/check";
 
 export function ProfileForm() {
+  const dispatch = useDispatch();
+
   const router = useRouter();
 
   const [loginUser, { isLoading }] = useLoginUserMutation();
@@ -38,6 +42,7 @@ export function ProfileForm() {
       .unwrap()
       .then((data) => {
         toast.success("Successfully Logged In!");
+        dispatch(login({ token: data.accessToken }));
         localStorage.setItem("insta-x-token", data.accessToken);
         localStorage.setItem(
           "insta-x-refreshToken",

@@ -6,7 +6,7 @@ import {
   FetchBaseQueryError,
   retry,
 } from "@reduxjs/toolkit/query/react";
-// import { logout } from '../slices/authSlice';
+import { logout } from "../slices/check"; // Adjust the import as necessary
 
 const baseQuery: BaseQueryFn<
   string | FetchArgs,
@@ -23,22 +23,23 @@ const baseQuery: BaseQueryFn<
       return headers;
     },
   });
+
   const result = await rawBaseQuery(args, api, extraOptions);
   if (result.error) {
     const { status } = result.error;
     if (status === 401 || status === 403) {
-      console.error(
-        "Unauthorized access - Redirecting to login...vaaaaaaaaaaaa"
-      );
+      api.dispatch(logout());
+      console.error("Unauthorized access - Redirecting to login...");
     }
   }
   return result;
 };
+
 const baseQueryWithRetry = retry(baseQuery, { maxRetries: 1 });
 
 export const api = createApi({
   reducerPath: "myApi",
   baseQuery: baseQueryWithRetry,
-  tagTypes: ["User"], // o'zgaradi
+  tagTypes: ["User"],
   endpoints: () => ({}),
 });

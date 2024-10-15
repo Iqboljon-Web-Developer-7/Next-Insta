@@ -2,11 +2,21 @@
 import React, { useEffect } from "react";
 import Nav from "@/components/nav/Nav";
 import { redirect } from "next/navigation";
+import { useSelector } from "react-redux";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
+  // const isAuthenticated = useSelector(
+  //   (state: { auth: { isAuthenticated: boolean } }) =>
+  //     state.auth.isAuthenticated
+  // );
+
+  const authCheck = useSelector(
+    (state: { auth: { isAuthenticated: boolean } }) => state.auth
+  );
+
   useEffect(() => {
     const token = localStorage.getItem("insta-x-token");
-    if (!token) {
+    if (!token || !authCheck?.isAuthenticated) {
       redirect("/auth/login");
     } else {
       try {
@@ -22,7 +32,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex">
       <Nav />
-      <div>{children}</div>
+      <>{children}</>
     </div>
   );
 };
