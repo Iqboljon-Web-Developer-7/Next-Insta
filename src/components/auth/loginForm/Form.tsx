@@ -25,6 +25,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { useLoginUserMutation } from "@/redux/api/auth/login";
 
 type ChangedData = {
   username: string;
@@ -32,53 +33,14 @@ type ChangedData = {
 };
 
 export function ProfileForm() {
-  const [isLoading, setIsLoading] = useState(false);
-
   const router = useRouter();
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  const fetcher = (url: string, data: ChangedData) =>
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...data }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          res.json().then((data) => {
-            if (typeof data.message == "object") {
-              toast.error(data.message[0]);
-            } else {
-              toast.error(data.message);
-            }
-          });
-          return;
-        }
-        return res.json();
-      })
-      .then((data) => {
-        toast(data.message);
-        if (data.accessToken) {
-          toast.success("Youre Successfully Signed In!");
-          localStorage.setItem(
-            "insta-x-token",
-            JSON.stringify(data.accessToken)
-          );
-          router.push("/");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
+  const [loginUser, { data, isLoading }] = useLoginUserMutation();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    fetcher(`${API_URL}/api/auth/login`, values);
+    loginUser({ body: values });
   }
 
   return (
@@ -123,7 +85,7 @@ export function ProfileForm() {
           type="submit"
           className="bg-[#877EFF] w-full py-5 rounded-[.3rem]"
         >
-          Login
+          {isLoading ? <div className="loader"></div> : "Login"}
         </Button>
       </form>
     </Form>

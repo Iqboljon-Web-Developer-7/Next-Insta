@@ -15,7 +15,7 @@ const baseQuery: BaseQueryFn<
 > = async (args, api, extraOptions) => {
   const { dispatch } = api;
   const rawBaseQuery = fetchBaseQuery({
-    baseUrl: "https://api.jsonbin.io/v3/b",
+    baseUrl: "https://sea-turtle-app-c2icp.ondigitalocean.app",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("x-auth-token");
       if (token) {
@@ -43,6 +43,6 @@ const baseQueryWithRetry = retry(baseQuery, { maxRetries: 1 });
 export const api = createApi({
   reducerPath: "myApi",
   baseQuery: baseQueryWithRetry,
-  tagTypes: ["Users", "Products", "Articles"], // o'zgaradi
+  tagTypes: ["User"], // o'zgaradi
   endpoints: () => ({}),
 });
