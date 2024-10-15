@@ -1,7 +1,8 @@
 "use client";
 
-import { z } from "zod";
+import "../styles/loader.scss";
 
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -22,6 +23,8 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
 type ChangedData = {
   username: string;
@@ -29,7 +32,10 @@ type ChangedData = {
 };
 
 export function ProfileForm() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
+
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const fetcher = (url: string, data: ChangedData) =>
     fetch(url, {
@@ -39,9 +45,23 @@ export function ProfileForm() {
       },
       body: JSON.stringify({ ...data }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          res.json().then((data) => {
+            if (typeof data.message == "object") {
+              toast.error(data.message[0]);
+            } else {
+              toast.error(data.message);
+            }
+          });
+          return;
+        }
+        return res.json();
+      })
       .then((data) => {
+        toast(data.message);
         if (data.accessToken) {
+          toast.success("Youre Successfully Signed In!");
           localStorage.setItem(
             "insta-x-token",
             JSON.stringify(data.accessToken)
@@ -57,8 +77,7 @@ export function ProfileForm() {
     resolver: zodResolver(formSchema),
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(API_URL);
-
+    setIsLoading(true);
     fetcher(`${API_URL}/api/auth/login`, values);
   }
 

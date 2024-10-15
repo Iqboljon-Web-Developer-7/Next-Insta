@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 // To know pathname
-import { usePathname } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 
 // Images
 import websiteLogo from "@/assets/logo/website__logo.svg";
@@ -25,6 +25,7 @@ import SettingsImg from "@/assets/nav/Settings.svg";
 import IndicatorImg from "@/assets/nav/indicator.svg";
 
 import "./styles.scss";
+import { toast } from "react-toastify";
 
 const links = [
   { href: "/", imgSrc: HomeImg.src, label: "Home" },
@@ -38,6 +39,17 @@ const links = [
 
 const Nav = () => {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogOut = () => {
+    toast("Logged out", {
+      autoClose: 1250,
+      position: "bottom-right",
+      theme: "dark",
+    });
+    localStorage.clear();
+    router.push("/auth/login");
+  };
 
   return (
     <div className="navigation bg-black min-h-screen text-white w-[17rem] flex flex-col justify-between border-e border-[#4f4f4f4f]">
@@ -87,8 +99,8 @@ const Nav = () => {
       </div>
       <div className="subNav flex-center flex-col gap-2 py-2">
         <button
-          className={`
-              font-semibold w-full px-4 relative nav__link group`}
+          onClick={() => handleLogOut()}
+          className={`font-semibold w-full px-4 relative nav__link group`}
         >
           <span
             className={`hover:bg-[#ef3a3a] duration-300 w-full p-4 rounded-xl text-[1.125rem] flex gap-4`}

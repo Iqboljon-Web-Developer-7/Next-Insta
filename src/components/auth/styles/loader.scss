@@ -1,0 +1,18 @@
+.loader {
+  width: 15px;
+  aspect-ratio: 1;
+  background: #80ed99;
+  border-radius: 50%;
+  animation: l6 0.75s infinite linear alternate;
+}
+@keyframes l6 {
+  0% {
+    box-shadow: 15px 0 #80ed99, -25px -2px #80ed99;
+  }
+  50% {
+    box-shadow: 15px 0 #80ed99, -15px 0 #80ed99;
+  }
+  100% {
+    box-shadow: 25px -2px #80ed99, -15px 0 #80ed99;
+  }
+}
