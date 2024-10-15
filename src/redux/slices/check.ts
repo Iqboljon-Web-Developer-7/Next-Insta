@@ -1,18 +1,22 @@
-// authSlice.js
 import { createSlice } from "@reduxjs/toolkit";
+
+const isBrowser = typeof window !== "undefined";
 
 const auth = createSlice({
   name: "auth",
   initialState: {
-    isAuthenticated:
-      JSON.parse(localStorage.getItem("insta-isLogged")!) || false,
+    isAuthenticated: isBrowser
+      ? JSON.parse(localStorage.getItem("insta-isLogged")!) || false
+      : false,
     token: null,
   },
   reducers: {
     logout: (state) => {
       state.isAuthenticated = false;
       state.token = null;
-      localStorage.setItem("insta-isLogged", JSON.stringify("false"));
+      if (isBrowser) {
+        localStorage.setItem("insta-isLogged", JSON.stringify("false"));
+      }
     },
     login: (state, action) => {
       state.isAuthenticated = true;
