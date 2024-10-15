@@ -1,13 +1,22 @@
 "use client";
 
-import { useGetUsersQuery } from "@/redux/api/user-api";
+import React, { useEffect } from "react";
+import {
+  useFollorUserMutation,
+  useGetUserProfileQuery,
+  useGetUsersQuery,
+  useUnFollowUserMutation,
+} from "@/redux/api/user-api";
 import { Creator } from "@/types/types";
-import React from "react";
 
 import "./styles.scss";
 
 const Users: React.FC = () => {
+  const { data: userData } = useGetUserProfileQuery("");
   const { data } = useGetUsersQuery("");
+  const [follorUser, { isLoading: followLoading }] = useFollorUserMutation();
+  const [unfollowUser, { isLoading: unfollowLoading }] =
+    useUnFollowUserMutation();
 
   return (
     <div className="users max-h-screen overflow-hidden p-4 mr-9">
@@ -30,9 +39,29 @@ const Users: React.FC = () => {
             <p className="text-gray-400 text-sm">
               {creator.emailActivated ? "Email Verified" : "Not Verified"}
             </p>
-            <button className="mt-4 bg-purple-600 text-white py-1 px-4 rounded-full text-sm">
-              Follow
-            </button>
+            {creator.followers.some((item) => item._id == userData?._id) ? (
+              <button
+                onClick={() => unfollowUser({ username: creator.username })}
+                className="mt-4 bg-red-300 text-white py-1 px-4 rounded-full text-sm"
+              >
+                {unfollowLoading ? (
+                  <div className="loader">loading...</div>
+                ) : (
+                  "Unfollow"
+                )}
+              </button>
+            ) : (
+              <button
+                onClick={() => follorUser({ username: creator.username })}
+                className="mt-4 bg-purple-600 text-white py-1 px-4 rounded-full text-sm"
+              >
+                {followLoading ? (
+                  <div className="loader">loading...</div>
+                ) : (
+                  "Follow"
+                )}
+              </button>
+            )}
           </div>
         ))}
       </div>

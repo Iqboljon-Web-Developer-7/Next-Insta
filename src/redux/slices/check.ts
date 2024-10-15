@@ -5,9 +5,9 @@ const isBrowser = typeof window !== "undefined";
 const auth = createSlice({
   name: "auth",
   initialState: {
-    isAuthenticated: isBrowser
-      ? JSON.parse(localStorage.getItem("insta-isLogged")!) || false
-      : false,
+    isAuthenticated:
+      (isBrowser && JSON.parse(localStorage.getItem("insta-isLogged")!)) ||
+      true,
     token: null,
   },
   reducers: {

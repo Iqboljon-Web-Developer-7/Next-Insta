@@ -18,11 +18,24 @@ export const usersApi = api.injectEndpoints({
     }),
     follorUser: build.mutation({
       query: ({ username }) => ({
+        method: "POST",
         url: `user/follow/${username}`,
+      }),
+      invalidatesTags: ["User"],
+    }),
+    unFollowUser: build.mutation({
+      query: ({ username }) => ({
+        method: "POST",
+        url: `user/unfollow/${username}`,
       }),
       invalidatesTags: ["User"],
     }),
   }),
 });
 
-export const { useGetUserProfileQuery, useGetUsersQuery } = usersApi;
+export const {
+  useGetUserProfileQuery,
+  useGetUsersQuery,
+  useFollorUserMutation,
+  useUnFollowUserMutation,
+} = usersApi;

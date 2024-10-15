@@ -6,10 +6,14 @@ export interface Creator {
   fullName: string;
   emailActivated: boolean;
   role: string;
-  followers: string[];
+  followers: Followers[];
   following: string[];
   posts: string[];
   reels: string[];
   createdAt: string;
   updatedAt: string;
+}
+
+interface Followers {
+  _id: string;
 }

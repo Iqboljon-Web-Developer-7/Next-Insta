@@ -42,7 +42,6 @@ const Nav = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const [token, setToken] = useState("");
   const { data, isError } = useGetUserProfileQuery("");
 
   isError && redirect("/auth/login");
@@ -56,15 +55,6 @@ const Nav = () => {
     localStorage.clear();
     router.push("/auth/login");
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("insta-x-token")!;
-    try {
-      setToken(token);
-    } catch (error) {
-      console.error("Something Went Wrong");
-    }
-  }, []);
 
   return (
     <div className="navigation bg-black min-h-screen text-white w-[17rem] flex flex-col justify-between border-e border-[#4f4f4f4f]">
