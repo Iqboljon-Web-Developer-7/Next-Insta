@@ -20,11 +20,8 @@ const baseQuery: BaseQueryFn<
       const token = localStorage.getItem("x-auth-token");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
+      } else {
       }
-      headers.set(
-        "X-Master-Key",
-        "$2a$10$.vg2bZmuax/qqiu9DJyk.uwTjcLnUITl8AW/avzdSi8vzDTQb61da"
-      );
       return headers;
     },
   });
@@ -32,7 +29,9 @@ const baseQuery: BaseQueryFn<
   if (result.error) {
     const { status } = result.error;
     if (status === 401 || status === 403) {
-      console.error("Unauthorized access - Redirecting to login...");
+      console.error(
+        "Unauthorized access - Redirecting to login...vaaaaaaaaaaaa"
+      );
       // dispatch(logout())
     }
   }

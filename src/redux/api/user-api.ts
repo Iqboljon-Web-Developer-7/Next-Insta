@@ -13,13 +13,13 @@ interface GetUserParams {
 
 export const usersApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getUser: build.query<User, GetUserParams>({
+    getUserProfile: build.query<User, GetUserParams>({
       query: ({ id }) => ({
-        url: `/users/${id}`,
+        url: `/user/profile`,
       }),
       providesTags: ["User"],
     }),
   }),
 });
 
-export const { useGetUserQuery } = usersApi;
+export const { useGetUserProfileQuery } = usersApi;
