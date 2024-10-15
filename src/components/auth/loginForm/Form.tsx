@@ -24,7 +24,6 @@ import { Input } from "@/components/ui/input";
 
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { useState } from "react";
 import { useLoginUserMutation } from "@/redux/api/auth/login";
 
 type ChangedData = {
@@ -40,7 +39,24 @@ export function ProfileForm() {
     resolver: zodResolver(formSchema),
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
-    loginUser({ body: values });
+    loginUser({ body: values })
+      .unwrap()
+      .then((data) => {
+        toast.success("Successfully Logged In!");
+        localStorage.setItem("insta-x-token", data.accessToken);
+        localStorage.setItem(
+          "insta-x-refreshToken",
+          JSON.stringify(data.refreshToken)
+        );
+        router.push("/");
+      })
+      .catch((error) => {
+        if (typeof error.data.message == "object") {
+          toast.error(error.data.message[0]);
+        } else {
+          toast.error(error.data.message);
+        }
+      });
   }
 
   return (
