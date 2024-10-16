@@ -44,8 +44,6 @@ const Nav = () => {
 
   const { data, isError } = useGetUserProfileQuery("");
 
-  console.log(data);
-
   isError && redirect("/auth/login");
 
   const handleLogOut = () => {

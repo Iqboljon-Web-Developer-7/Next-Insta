@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import {
   useFollorUserMutation,
   useGetUserProfileQuery,
@@ -14,12 +13,29 @@ import "./styles.scss";
 const Users: React.FC = () => {
   const { data: userData } = useGetUserProfileQuery("");
   const { data } = useGetUsersQuery("");
-  const [follorUser, { isLoading: followLoading }] = useFollorUserMutation();
-  const [unfollowUser, { isLoading: unfollowLoading }] =
-    useUnFollowUserMutation();
+  const [follorUser] = useFollorUserMutation();
+  const [unfollowUser] = useUnFollowUserMutation();
 
-  console.log(userData);
-  console.log(data);
+  // State to keep track of the loading user
+  const [loadingUser, setLoadingUser] = useState<string | null>(null);
+
+  const handleFollow = async (username: string) => {
+    setLoadingUser(username);
+    try {
+      await follorUser({ username });
+    } finally {
+      setLoadingUser(null);
+    }
+  };
+
+  const handleUnfollow = async (username: string) => {
+    setLoadingUser(username);
+    try {
+      await unfollowUser({ username });
+    } finally {
+      setLoadingUser(null);
+    }
+  };
 
   return (
     <div className="users max-h-screen overflow-hidden mr-9 flex-grow-[1]">
@@ -46,26 +62,28 @@ const Users: React.FC = () => {
             </p>
 
             {userData?._id &&
-              (creator.followers.some((item) => item._id == userData?._id) ? (
+              (creator.followers.some((item) => item._id == userData._id) ? (
                 <button
-                  onClick={() => unfollowUser({ username: creator.username })}
+                  onClick={() => handleUnfollow(creator.username)}
                   className="mt-4 bg-red-300 text-white py-1 px-4 rounded-full text-sm"
+                  disabled={loadingUser === creator.username}
                 >
-                  {unfollowLoading ? (
+                  {loadingUser === creator.username ? (
                     <div className="loader my-1 mx-3"></div>
                   ) : (
-                    "Unfollow"
+                    <span>Unfollow</span>
                   )}
                 </button>
               ) : (
                 <button
-                  onClick={() => follorUser({ username: creator.username })}
+                  onClick={() => handleFollow(creator.username)}
                   className="mt-4 bg-purple-600 text-white py-1 px-4 rounded-full text-sm"
+                  disabled={loadingUser === creator.username}
                 >
-                  {followLoading ? (
-                    <div className="loader  my-1 mx-3"></div>
+                  {loadingUser === creator.username ? (
+                    <div className="loader my-1 mx-3"></div>
                   ) : (
-                    "Follow"
+                    <span>Follow</span>
                   )}
                 </button>
               ))}
