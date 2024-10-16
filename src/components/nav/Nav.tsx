@@ -11,6 +11,7 @@ import { redirect, usePathname, useRouter } from "next/navigation";
 
 // Images
 import websiteLogo from "@/assets/logo/website__logo.svg";
+import LogoImg from "@/assets/logo/favicon.png";
 
 import HomeImg from "@/assets/nav/Home.svg";
 import ExploreImg from "@/assets/nav/Gallery.svg";
@@ -56,29 +57,50 @@ const Nav = () => {
     router.push("/auth/login");
   };
 
+  const [isOpen, setIsOpen] = useState(true);
+  useEffect(() => {
+    window.innerWidth < 1222 && setIsOpen(false);
+
+    window.addEventListener("resize", (e) => {
+      const target = e.target as Window;
+      target.innerWidth < 1222 ? setIsOpen(false) : setIsOpen(true);
+    });
+    return () => window.removeEventListener("resize", () => {});
+  }, []);
+
   return (
-    <div className="navigation bg-black min-h-[45rem] min-w-[17rem] text-white w-[17rem] flex flex-col justify-between border-e border-[#4f4f4f4f]">
+    <div
+      className={`navigation bg-black transition-all ${
+        isOpen && "min-w-[17rem] w-[17rem]"
+      } min-h-[52rem] text-white flex flex-col justify-between border-e border-[#4f4f4f4f]`}
+    >
       <div>
         <Image
-          src={websiteLogo.src}
+          src={isOpen ? websiteLogo.src : LogoImg.src}
           alt="website logo"
-          width={0}
-          height={0}
-          className="p-[2.5rem_1.5rem] w-52 pb-0"
+          width={120}
+          height={120}
+          className={`pb-0 ${
+            isOpen ? "w-52 p-[2.5rem_1.5rem]" : "w-10 m-4 mx-auto"
+          }`}
           priority
         />
-        <div className="userProfile my-[2rem] px-4 flex gap-3">
+        <div
+          className={`userProfile my-[2rem] px-4 flex gap-3 overflow-hidden relative ${
+            isOpen && "custom-shadow"
+          }`}
+        >
           <img
             src={
               data?.photo ||
               "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
             }
-            className="w-14 h-14 rounded-full"
+            className="w-14 h-14 rounded-full flex-shrink-0"
             alt="user image"
           />
-          <div className="userProfile__info">
-            <h2>{data?.username}</h2>
-            <p>{data?.email}</p>
+          <div className={`userProfile__info ${!isOpen && "hidden"} relative`}>
+            <h2 className="font-semibold">{data?.username}</h2>
+            <p className="text-[#7878A3] line-clamp-1">{data?.email}</p>
           </div>
         </div>
         <nav className="navigation__main flex items-start justify-center gap-2 flex-col">
@@ -110,7 +132,8 @@ const Nav = () => {
                     pathname === link.href ? "brightness-0 invert" : ""
                   }`}
                 />
-                {link.label}
+
+                {isOpen && link.label}
               </span>
             </Link>
           ))}
@@ -133,7 +156,7 @@ const Nav = () => {
                 pathname === "/logout" ? "brightness-0 invert" : ""
               }`}
             />
-            Logout
+            {isOpen && "Logout"}
           </span>
         </button>
         <Link
@@ -154,7 +177,7 @@ const Nav = () => {
                 pathname === "/settings" ? "brightness-0 invert" : ""
               }`}
             />
-            Settings
+            {isOpen && "Settings"}
           </span>
         </Link>
       </div>
