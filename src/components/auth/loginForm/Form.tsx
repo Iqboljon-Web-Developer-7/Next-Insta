@@ -1,10 +1,10 @@
 "use client";
 
-import "../styles/loader.scss";
-
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+
+import "@/scss/util/_loader.scss";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),

@@ -18,10 +18,15 @@ const Users: React.FC = () => {
   const [unfollowUser, { isLoading: unfollowLoading }] =
     useUnFollowUserMutation();
 
+  console.log(userData);
+  console.log(data);
+
   return (
-    <div className="users max-h-screen overflow-hidden p-4 mr-9">
-      <h2 className="text-white text-2xl p-[2.5rem_1.5rem]">Top Creators</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[40rem] overflow-y-auto users__wrapper">
+    <div className="users max-h-screen overflow-hidden mr-9 flex-grow-[1]">
+      <h2 className="text-white text-2xl p-[2.5rem_1.5rem] pb-0">
+        Top Creators
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[45rem] mt-[2rem] overflow-y-auto users__wrapper">
         {data?.map((creator: Creator, idx: number) => (
           <div
             key={creator._id || idx}
@@ -39,29 +44,31 @@ const Users: React.FC = () => {
             <p className="text-gray-400 text-sm">
               {creator.emailActivated ? "Email Verified" : "Not Verified"}
             </p>
-            {creator.followers.some((item) => item._id == userData?._id) ? (
-              <button
-                onClick={() => unfollowUser({ username: creator.username })}
-                className="mt-4 bg-red-300 text-white py-1 px-4 rounded-full text-sm"
-              >
-                {unfollowLoading ? (
-                  <div className="loader">loading...</div>
-                ) : (
-                  "Unfollow"
-                )}
-              </button>
-            ) : (
-              <button
-                onClick={() => follorUser({ username: creator.username })}
-                className="mt-4 bg-purple-600 text-white py-1 px-4 rounded-full text-sm"
-              >
-                {followLoading ? (
-                  <div className="loader">loading...</div>
-                ) : (
-                  "Follow"
-                )}
-              </button>
-            )}
+
+            {userData?._id &&
+              (creator.followers.some((item) => item._id == userData?._id) ? (
+                <button
+                  onClick={() => unfollowUser({ username: creator.username })}
+                  className="mt-4 bg-red-300 text-white py-1 px-4 rounded-full text-sm"
+                >
+                  {unfollowLoading ? (
+                    <div className="loader my-1 mx-3"></div>
+                  ) : (
+                    "Unfollow"
+                  )}
+                </button>
+              ) : (
+                <button
+                  onClick={() => follorUser({ username: creator.username })}
+                  className="mt-4 bg-purple-600 text-white py-1 px-4 rounded-full text-sm"
+                >
+                  {followLoading ? (
+                    <div className="loader  my-1 mx-3"></div>
+                  ) : (
+                    "Follow"
+                  )}
+                </button>
+              ))}
           </div>
         ))}
       </div>

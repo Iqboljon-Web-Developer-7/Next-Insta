@@ -2,6 +2,8 @@
 
 import "../styles/loader.scss";
 
+import "@/scss/util/_loader.scss";
+
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

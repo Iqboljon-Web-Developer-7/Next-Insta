@@ -44,6 +44,8 @@ const Nav = () => {
 
   const { data, isError } = useGetUserProfileQuery("");
 
+  console.log(data);
+
   isError && redirect("/auth/login");
 
   const handleLogOut = () => {
@@ -57,7 +59,7 @@ const Nav = () => {
   };
 
   return (
-    <div className="navigation bg-black min-h-screen text-white w-[17rem] flex flex-col justify-between border-e border-[#4f4f4f4f]">
+    <div className="navigation bg-black min-h-[45rem] min-w-[17rem] text-white w-[17rem] flex flex-col justify-between border-e border-[#4f4f4f4f]">
       <div>
         <Image
           src={websiteLogo.src}
@@ -67,7 +69,21 @@ const Nav = () => {
           className="p-[2.5rem_1.5rem] w-52 pb-0"
           priority
         />
-        <nav className="navigation__main mt-[2rem] flex items-start justify-center gap-2 flex-col">
+        <div className="userProfile my-[2rem] px-4 flex gap-3">
+          <img
+            src={
+              data?.photo ||
+              "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
+            }
+            className="w-14 h-14 rounded-full"
+            alt="user image"
+          />
+          <div className="userProfile__info">
+            <h2>{data?.username}</h2>
+            <p>{data?.email}</p>
+          </div>
+        </div>
+        <nav className="navigation__main flex items-start justify-center gap-2 flex-col">
           {links.map((link) => (
             <Link
               key={link.label}
