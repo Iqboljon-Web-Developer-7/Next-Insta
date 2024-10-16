@@ -1,7 +1,5 @@
 "use client";
 
-import "../styles/loader.scss";
-
 import "@/scss/util/_loader.scss";
 
 import { z } from "zod";
