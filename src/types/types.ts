@@ -17,3 +17,22 @@ export interface Creator {
 interface Followers {
   _id: string;
 }
+
+export interface CreatePostTypes {
+  data: {
+    content: string[];
+    content_alt: string;
+    caption: string;
+    location: string;
+  };
+}
+
+export interface GeoTyes {
+  latitude: number;
+  longitude: number;
+  city: string;
+}
+
+export interface GeoHelperType {
+  types: string[];
+}

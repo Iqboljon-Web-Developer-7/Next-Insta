@@ -5,7 +5,7 @@ import {
   useGetUserProfileQuery,
   useGetUsersQuery,
   useUnFollowUserMutation,
-} from "@/redux/api/user-api";
+} from "@/redux/api/user";
 import { Creator } from "@/types/types";
 
 import "./styles.scss";

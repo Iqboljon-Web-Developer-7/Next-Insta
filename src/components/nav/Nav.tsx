@@ -27,7 +27,7 @@ import IndicatorImg from "@/assets/nav/indicator.svg";
 
 import "./styles.scss";
 import { toast } from "react-toastify";
-import { useGetUserProfileQuery } from "@/redux/api/user-api";
+import { useGetUserProfileQuery } from "@/redux/api/user";
 
 const links = [
   { href: "/", imgSrc: HomeImg.src, label: "Home" },
