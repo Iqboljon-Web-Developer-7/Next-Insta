@@ -3,7 +3,7 @@ import { api } from "./index";
 
 export const usersApi = api.injectEndpoints({
   endpoints: (build) => ({
-    uploadFiles: build.query({
+    uploadFiles: build.mutation({
       query: ({ files }) => ({
         url: `/upload/files`,
         method: "POST",
@@ -11,7 +11,7 @@ export const usersApi = api.injectEndpoints({
       }),
       //   providesTags: ["User"],
     }),
-    createPost: build.query<"", CreatePostTypes>({
+    createPost: build.mutation<"", CreatePostTypes>({
       query: ({ data }) => ({
         url: "/post",
         method: "POST",
@@ -21,4 +21,4 @@ export const usersApi = api.injectEndpoints({
   }),
 });
 
-export const {} = usersApi;
+export const { useUploadFilesMutation, useCreatePostMutation } = usersApi;

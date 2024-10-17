@@ -36,3 +36,7 @@ export interface GeoTyes {
 export interface GeoHelperType {
   types: string[];
 }
+
+export interface GeoSetLocationNameType {
+  setLocation: React.Dispatch<React.SetStateAction<string>>;
+}

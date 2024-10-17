@@ -1,9 +1,11 @@
 "use client";
 
-import { GeoTyes } from "@/types/types";
+import { GeoSetLocationNameType, GeoTyes } from "@/types/types";
 import { useState, useEffect } from "react";
 
-const LocationDisplay = () => {
+const LocationDisplay = ({
+  setLocation: setLocationName,
+}: GeoSetLocationNameType) => {
   const [location, setLocation] = useState<GeoTyes>({
     latitude: 0,
     longitude: 0,
@@ -39,7 +41,11 @@ const LocationDisplay = () => {
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
       );
       const data = await response.json();
-      console.log(data);
+      if (data) {
+        setLocationName(
+          `${data?.address?.country}, ${data?.address?.city}, ${data?.address?.county}`
+        );
+      }
 
       const city =
         data.address.city ||
@@ -56,33 +62,7 @@ const LocationDisplay = () => {
     }
   };
 
-  return (
-    <div
-      style={{
-        padding: "20px",
-        border: "1px solid #ccc",
-        borderRadius: "8px",
-        maxWidth: "400px",
-        margin: "20px auto",
-      }}
-    >
-      <h3>Your Location Information</h3>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {!error && (
-        <>
-          <p>
-            <strong>Latitude:</strong> {location.latitude || "Fetching..."}
-          </p>
-          <p>
-            <strong>Longitude:</strong> {location.longitude || "Fetching..."}
-          </p>
-          <p>
-            <strong>City:</strong> {location.city || "Fetching..."}
-          </p>
-        </>
-      )}
-    </div>
-  );
+  return <></>;
 };
 
 export default LocationDisplay;
