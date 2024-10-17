@@ -72,7 +72,7 @@ const Nav = () => {
     <div
       className={`navigation bg-black transition-all ${
         isOpen && "min-w-[17rem] w-[17rem]"
-      } min-h-[52rem] text-white flex flex-col justify-between border-e border-[#4f4f4f4f]`}
+      } min-h-screen text-white flex flex-col justify-between border-e border-[#4f4f4f4f]`}
     >
       <div>
         <Image

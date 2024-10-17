@@ -14,7 +14,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <div className="flex max-w-[100rem] mx-auto">
+    <div className="flex max-w-[100rem] max-h-screen mx-auto">
       <Nav />
       <>{children}</>
     </div>
