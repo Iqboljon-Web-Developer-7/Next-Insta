@@ -10,11 +10,15 @@ import galleryImage from "@/assets/post/galler-icon.svg";
 import locationImage from "@/assets/post/location-icon.svg";
 import { useCreatePostMutation } from "@/redux/api/createPost";
 
+import { useRouter } from "next/navigation";
+
 const CreatePost = () => {
   const [files, setFiles] = useState<{ content: string[] }>({ content: [] });
+  const [createPost, { isLoading }] = useCreatePostMutation();
   const [location, setLocation] = useState("");
+  const [ready, setReady] = useState(false);
 
-  const [createPost, {}] = useCreatePostMutation();
+  const router = useRouter();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -24,17 +28,20 @@ const CreatePost = () => {
 
     const caption = formData.get("caption") as string;
     const location = formData.get("location") as string;
+    const content_alt = formData.get("contentAlt") as string;
 
     let response = {
       content: [...files.content],
-      content_alt: "what a beautiful!",
+      content_alt,
       caption,
       location,
     };
 
-    createPost({ data: response });
-
-    console.log(response);
+    createPost({ data: response })
+      .unwrap()
+      .then(() => {
+        router.push("/");
+      });
   };
 
   useEffect(() => {}, [files]);
@@ -68,7 +75,11 @@ const CreatePost = () => {
             </div>
             <div>
               <label className="block text-lg mb-2">Add Photos/Videos</label>
-              <FileUpload setFiles={setFiles} />
+              <FileUpload
+                setFiles={setFiles}
+                ready={ready}
+                setReady={setReady}
+              />
             </div>
             <div>
               <LocationDisplay setLocation={setLocation} />
@@ -99,6 +110,7 @@ const CreatePost = () => {
                 Photo/Video Alt Text
               </label>
               <input
+                name="contentAlt"
                 id="altText"
                 type="text"
                 className="w-full p-3 bg-[#101012] rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 duration-100"
@@ -106,12 +118,18 @@ const CreatePost = () => {
               />
             </div>
             <div className="text-right">
-              {files.content.length > 0 && (
+              {files.content.length > 0 && ready && (
                 <button
                   type="submit"
                   className="bg-[#877EFF] text-white px-6 py-3 rounded-lg hover:bg-purple-700 focus:outline-none"
                 >
-                  Share Post
+                  {isLoading ? (
+                    <div className="px-4">
+                      <div className="loader"></div>{" "}
+                    </div>
+                  ) : (
+                    "Share Post"
+                  )}
                 </button>
               )}
             </div>
