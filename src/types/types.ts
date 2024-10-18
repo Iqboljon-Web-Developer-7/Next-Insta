@@ -40,3 +40,17 @@ export interface GeoHelperType {
 export interface GeoSetLocationNameType {
   setLocation: React.Dispatch<React.SetStateAction<string>>;
 }
+
+export interface PostProps {
+  user: {
+    name: string;
+    profilePicture: string;
+  };
+  timestamp: string;
+  caption: string;
+  hashtags: string[];
+  content?: string[];
+  likesCount: number;
+  commentsCount: number;
+  sharesCount: number;
+}

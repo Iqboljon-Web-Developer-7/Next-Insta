@@ -1,3 +1,4 @@
+import { PostProps } from "@/types/types";
 import React from "react";
 import {
   FaHeart,
@@ -6,20 +7,6 @@ import {
   FaChevronRight,
   FaChevronLeft,
 } from "react-icons/fa";
-
-interface PostProps {
-  user: {
-    name: string;
-    profilePicture: string;
-  };
-  timestamp: string;
-  caption: string;
-  hashtags: string[];
-  content: string[];
-  likesCount: number;
-  commentsCount: number;
-  sharesCount: number;
-}
 
 const PostItem: React.FC<PostProps> = ({
   user,
@@ -58,10 +45,10 @@ const PostItem: React.FC<PostProps> = ({
 
       {/* Image carousel */}
       <div className="relative">
-        {content?.length > 0 && (
+        {content!?.length > 0 && (
           <div className="overflow-hidden rounded-lg">
             <img
-              src={content[0]}
+              src={content![0]}
               alt="Post"
               className="w-full h-64 object-cover"
             />

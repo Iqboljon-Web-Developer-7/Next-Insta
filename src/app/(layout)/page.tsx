@@ -1,17 +1,17 @@
 "use client";
 
+import PostItem from "@/components/home/postItem/PostItem";
 import Stories from "@/components/home/stories/Stories";
 import Users from "@/components/home/users/Users";
 import { useGetPostsQuery } from "@/redux/api/Post";
-
-import PostItem from "@/components/home/postItem/PostItem";
+import { PostProps } from "@/types/types";
 
 const page = () => {
   const { data: posts } = useGetPostsQuery("");
 
   console.log(posts);
 
-  let postsResponse = posts?.map((item: any, idx: number) => (
+  let postsResponse = posts?.map((item: PostProps, idx: number) => (
     <PostItem {...item} />
   ));
 
