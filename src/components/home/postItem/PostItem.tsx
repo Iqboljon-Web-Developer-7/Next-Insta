@@ -1,12 +1,8 @@
 import { PostProps } from "@/types/types";
 import React from "react";
-import {
-  FaHeart,
-  FaComment,
-  FaShare,
-  FaChevronRight,
-  FaChevronLeft,
-} from "react-icons/fa";
+import { FaHeart, FaComment, FaShare } from "react-icons/fa";
+
+import Zoom from "react-medium-image-zoom";
 
 const PostItem: React.FC<PostProps> = ({
   user,
@@ -19,8 +15,7 @@ const PostItem: React.FC<PostProps> = ({
   sharesCount,
 }) => {
   return (
-    <div className="bg-gray-900 text-white p-4 rounded-lg shadow-lg mb-6">
-      {/* User info */}
+    <div className="text-slate-200 p-4 rounded-lg shadow-lg mb-6 border border-slate-800">
       <div className="flex items-center mb-2">
         <img
           src={user?.profilePicture}
@@ -33,7 +28,6 @@ const PostItem: React.FC<PostProps> = ({
         </div>
       </div>
 
-      {/* Caption */}
       <p className="mb-3">
         {caption}{" "}
         {hashtags?.map((tag) => (
@@ -43,27 +37,25 @@ const PostItem: React.FC<PostProps> = ({
         ))}
       </p>
 
-      {/* Image carousel */}
       <div className="relative">
         {content!?.length > 0 && (
           <div className="overflow-hidden rounded-lg">
-            <img
-              src={content![0]}
-              alt="Post"
-              className="w-full h-64 object-cover"
-            />
-            {/* Carousel controls (left and right arrows) */}
-            <button className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 p-2 rounded-full">
+            <Zoom>
+              <img
+                src={content![0]}
+                alt="Post"
+                className="w-full h-64 object-cover"
+              />
+            </Zoom>
+            {/* <button className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 p-2 rounded-full">
               <FaChevronLeft />
             </button>
             <button className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 p-2 rounded-full">
               <FaChevronRight />
-            </button>
+            </button> */}
           </div>
         )}
       </div>
-
-      {/* Footer (Likes, Comments, Shares) */}
       <div className="flex justify-between items-center mt-4 text-gray-400">
         <div className="flex items-center space-x-4">
           <span className="flex items-center space-x-1">

@@ -9,10 +9,8 @@ import { PostProps } from "@/types/types";
 const page = () => {
   const { data: posts } = useGetPostsQuery("");
 
-  console.log(posts);
-
   let postsResponse = posts?.map((item: PostProps, idx: number) => (
-    <PostItem {...item} />
+    <PostItem key={idx} {...item} />
   ));
 
   return (
@@ -20,7 +18,7 @@ const page = () => {
       <section className="flex-grow-[6] flex flex-col">
         <Stories />
         Home Feed
-        <div className="max-h-screen overflow-y-auto">{postsResponse}</div>
+        <div className="max-h-screen overflow-y-auto p-5">{postsResponse}</div>
       </section>
       <Users />
     </main>
