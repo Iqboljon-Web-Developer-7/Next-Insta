@@ -11,7 +11,7 @@ export const usersApi = api.injectEndpoints({
       }),
       //   providesTags: ["User"],
     }),
-    createPost: build.mutation<"", CreatePostTypes>({
+    createPost: build.mutation<any, CreatePostTypes>({
       query: ({ data }) => ({
         url: "/post",
         method: "POST",

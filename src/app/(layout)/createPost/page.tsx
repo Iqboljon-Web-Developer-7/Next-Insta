@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, SetStateAction, useEffect, useState } from "react";
 
 import Image from "next/image";
 import LocationDisplay from "@/components/geoAddress/GeoAddress";
@@ -8,15 +8,39 @@ import FileUpload from "@/components/fileUpload/FileUpload";
 
 import galleryImage from "@/assets/post/galler-icon.svg";
 import locationImage from "@/assets/post/location-icon.svg";
+import { useCreatePostMutation } from "@/redux/api/createPost";
 
 const CreatePost = () => {
+  const [files, setFiles] = useState<{ content: string[] }>({ content: [] });
   const [location, setLocation] = useState("");
-  const [ready, setReady] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {};
+  const [createPost, {}] = useCreatePostMutation();
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const target = e.target as HTMLFormElement;
+
+    const formData = new FormData(target);
+
+    const caption = formData.get("caption") as string;
+    const location = formData.get("location") as string;
+
+    let response = {
+      content: [...files.content],
+      content_alt: "what a beautiful!",
+      caption,
+      location,
+    };
+
+    createPost({ data: response });
+
+    console.log(response);
+  };
+
+  useEffect(() => {}, [files]);
 
   return (
-    <div className="min-h-screen grid grid-cols-[4fr_2fr] w-full text-white p-6">
+    <div className="min-h-screen grid md:grid-cols-[4fr_2fr] w-full text-white lg:p-6">
       <div className="mx-auto flex gap-10 w-full">
         <div className="w-full p-8 rounded-lg">
           <h2 className="text-4xl font-bold mb-6 flex gap-2">
@@ -35,6 +59,7 @@ const CreatePost = () => {
                 Caption
               </label>
               <textarea
+                name="caption"
                 id="caption"
                 rows={3}
                 className="w-full p-3 bg-[#101012] rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 duration-100"
@@ -43,7 +68,7 @@ const CreatePost = () => {
             </div>
             <div>
               <label className="block text-lg mb-2">Add Photos/Videos</label>
-              <FileUpload />
+              <FileUpload setFiles={setFiles} />
             </div>
             <div>
               <LocationDisplay setLocation={setLocation} />
@@ -55,6 +80,7 @@ const CreatePost = () => {
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   id="location"
+                  name="location"
                   type="text"
                   className="w-full p-3 bg-[#101012] rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 duration-100"
                   required
@@ -80,7 +106,7 @@ const CreatePost = () => {
               />
             </div>
             <div className="text-right">
-              {ready && (
+              {files.content.length > 0 && (
                 <button
                   type="submit"
                   className="bg-[#877EFF] text-white px-6 py-3 rounded-lg hover:bg-purple-700 focus:outline-none"

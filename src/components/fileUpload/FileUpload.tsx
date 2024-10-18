@@ -10,8 +10,19 @@ import "react-medium-image-zoom/dist/styles.css";
 import { Button } from "../ui/button";
 import { useUploadFilesMutation } from "@/redux/api/createPost";
 
-const FileUpload: React.FC = () => {
-  const [uploadFiles, {}] = useUploadFilesMutation();
+interface FileTypes {
+  setFiles: React.Dispatch<React.SetStateAction<{ content: string[] }>>;
+}
+interface itemTypes {
+  files: itemValue[];
+}
+
+interface itemValue {
+  url: string[];
+}
+
+const FileUpload: React.FC<FileTypes> = ({ setFiles }) => {
+  const [uploadFiles, { isLoading }] = useUploadFilesMutation();
   const [images, setImages] = useState<File[]>([]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -29,12 +40,22 @@ const FileUpload: React.FC = () => {
       formData.append("files", file);
     });
 
-    uploadFiles({ files: formData });
+    uploadFiles({ files: formData })
+      .unwrap()
+      .then((data) => {
+        let result = {
+          content: [],
+        };
+        // @ts-ignore
+        result.content = data.files.map((item: itemTypes[]) => item[0].url);
+        console.log(result.content);
+        setFiles(result);
+      });
   };
 
   return (
     <div className="w-full max-h-96 overflow-x-auto relative border-2 border-dashed border-slate-800 rounded-lg flex-center justify-start text-gray-400">
-      <input {...getInputProps()} accept="image/*" />
+      <input {...getInputProps()} accept="image/*, video/*" />
       {images.length <= 0 ? (
         <div
           {...getRootProps()}
@@ -90,7 +111,7 @@ const FileUpload: React.FC = () => {
           {images.length != 0 && (
             <div className="controls sticky inset-[auto_0_0_0] bottom-0 flex-center justify-between p-4 bg-[#00000088] backdrop-blur-sm">
               <Button type="button" onClick={handleFileUploading}>
-                Confirm
+                {isLoading ? "loading..." : "Confirm"}
               </Button>
               <Button
                 className="hover:bg-green-700 duration-200"
