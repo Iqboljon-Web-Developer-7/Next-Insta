@@ -10,7 +10,7 @@ import { IoCheckmarkCircle } from "react-icons/io5";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { Button } from "../ui/button";
-import { useUploadFilesMutation } from "@/redux/api/createPost";
+import { useUploadFilesMutation } from "@/redux/api/Post";
 
 interface FileTypes {
   setFiles: React.Dispatch<React.SetStateAction<{ content: string[] }>>;

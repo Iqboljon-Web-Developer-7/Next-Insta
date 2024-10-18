@@ -8,7 +8,7 @@ import FileUpload from "@/components/fileUpload/FileUpload";
 
 import galleryImage from "@/assets/post/galler-icon.svg";
 import locationImage from "@/assets/post/location-icon.svg";
-import { useCreatePostMutation } from "@/redux/api/createPost";
+import { useCreatePostMutation } from "@/redux/api/Post";
 
 import { useRouter } from "next/navigation";
 
