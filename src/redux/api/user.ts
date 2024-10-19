@@ -1,18 +1,18 @@
 import { api } from "./index";
 
-import { Creator } from "@/types/types";
+import { UserTypes } from "@/types/types";
 
 export const usersApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getUserProfile: build.query<Creator, "">({
+    getUserProfile: build.query<UserTypes, "">({
       query: () => ({
         url: `/user/profile`,
       }),
       providesTags: ["User"],
     }),
-    getUsers: build.query<Creator[], "">({
-      query: () => ({
-        url: `/user/all`,
+    getUsers: build.query<UserTypes[], { limit?: number }>({
+      query: ({ limit = 8 }) => ({
+        url: `/user/all?limit=${limit}`,
       }),
       providesTags: ["User"],
     }),

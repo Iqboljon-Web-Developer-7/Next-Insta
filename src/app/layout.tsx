@@ -33,7 +33,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.png" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-Inter bg-black text-slate-200`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-Inter bg-black text-slate-200 overflow-hidden`}
       >
         <Provider store={store}>{children}</Provider>
         <ToastContainer

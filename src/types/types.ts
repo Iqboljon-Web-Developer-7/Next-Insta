@@ -1,4 +1,4 @@
-export interface Creator {
+export interface UserTypes {
   _id: string;
   email: string;
   username: string;
@@ -42,15 +42,18 @@ export interface GeoSetLocationNameType {
 }
 
 export interface PostProps {
-  user: {
-    name: string;
-    profilePicture: string;
-  };
-  timestamp: string;
+  post: postTypes;
+}
+
+export interface postTypes {
+  content: string[];
+  owner: { photo: string; username: string };
+  name: string;
+  updatedAt: string;
   caption: string;
-  hashtags: string[];
-  content?: string[];
-  likesCount: number;
-  commentsCount: number;
-  sharesCount: number;
+  content_alt: string;
+  show_likes: boolean;
+  likes_count: number;
+  comments_count: number;
+  shares_count: number;
 }
