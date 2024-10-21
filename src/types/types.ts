@@ -46,7 +46,7 @@ export interface PostProps {
 }
 
 export interface postTypes {
-  name: string;
+  name?: string;
   post?: any;
   content: { url: string; type: string }[];
   owner: { photo: string; username: string };
