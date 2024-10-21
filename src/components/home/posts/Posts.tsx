@@ -11,7 +11,6 @@ const App: React.FC = () => {
     createdAt: "26 June at 09:32 PM",
     updatedAt: "",
     caption: "It's a big world out there - explore!",
-    // hashtags: ["nature", "mountains"],
     content: [
       { url: "https://via.placeholder.com/600x400", type: "IMAGE" },
       { url: "https://via.placeholder.com/600x400/0000FF", type: "IMAGE" },

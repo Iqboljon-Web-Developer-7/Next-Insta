@@ -43,7 +43,7 @@ const Nav = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const { data, isError } = useGetUserProfileQuery("");
+  const { data, isError } = useGetUserProfileQuery({});
 
   isError && redirect("/auth/login");
 
@@ -99,7 +99,12 @@ const Nav = () => {
             alt="user image"
           />
           <div className={`userProfile__info ${!isOpen && "hidden"} relative`}>
-            <h2 className="font-semibold">{data?.username}</h2>
+            <h2
+              className="font-semibold"
+              onClick={() => router.push(`/profile/${data?.username}`)}
+            >
+              {data?.username}
+            </h2>
             <p className="text-[#7878A3] line-clamp-1">{data?.email}</p>
           </div>
         </div>

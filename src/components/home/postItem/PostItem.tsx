@@ -11,8 +11,6 @@ import forwardImg from "@/assets/post/forward.svg";
 import Image from "next/image";
 
 const PostItem: React.FC<PostProps> = ({ post }) => {
-  console.log(post);
-
   return (
     post?.content.length > 0 && (
       <div className="text-slate-200 p-4 rounded-lg shadow-lg mb-6 border border-slate-800">
@@ -33,13 +31,21 @@ const PostItem: React.FC<PostProps> = ({ post }) => {
         <div className="relative">
           {post.content.length > 0 && (
             <div className="overflow-hidden rounded-lg">
-              <Zoom>
-                <img
+              {post.content[0].type == "IMAGE" ? (
+                <Zoom>
+                  <img
+                    src={post.content[0].url}
+                    alt={post.content_alt}
+                    className="w-full h-72 object-cover"
+                  />
+                </Zoom>
+              ) : (
+                <video
                   src={post.content[0].url}
-                  alt={post.content_alt}
-                  className="w-full h-64 object-cover"
-                />
-              </Zoom>
+                  className="max-h-96"
+                  controls
+                ></video>
+              )}
             </div>
           )}
         </div>

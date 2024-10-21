@@ -9,8 +9,6 @@ import { PostProps, postTypes } from "@/types/types";
 const page = () => {
   const { data: posts } = useGetPostsQuery("");
 
-  console.log(posts);
-
   let postsResponse = posts?.map((post: postTypes, idx: number) => (
     <PostItem key={idx} post={post} />
   ));
@@ -26,7 +24,7 @@ const page = () => {
           </div>
         ) : (
           new Array(3).fill(3).map((item, idx) => (
-            <div className="animate-pulse p-8">
+            <div key={idx} className="animate-pulse p-8">
               <div className="flex items-center gap-4 mb-1">
                 <div className="bg-slate-800 h-10 w-10 rounded-full"></div>
                 <div className="bg-slate-800 h-8 w-3/4 rounded"></div>

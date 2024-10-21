@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 
 import { UserTypes } from "@/types/types";
@@ -7,6 +9,8 @@ import {
   useUnFollowUserMutation,
 } from "@/redux/api/user";
 
+import { useRouter } from "next/navigation";
+
 interface UserHelperType {
   user: UserTypes;
   h3ClasStyles?: string;
@@ -15,7 +19,9 @@ interface UserHelperType {
 const User = ({ user, h3ClasStyles }: UserHelperType) => {
   const [loadingUser, setLoadingUser] = useState<string | null>(null);
 
-  const { data: userData } = useGetUserProfileQuery("");
+  const router = useRouter();
+
+  const { data: userData } = useGetUserProfileQuery({});
   const [follorUser] = useFollorUserMutation();
   const [unfollowUser] = useUnFollowUserMutation();
 
@@ -49,7 +55,10 @@ const User = ({ user, h3ClasStyles }: UserHelperType) => {
         alt={user.fullName}
         className="w-10 h-10 lg:w-14 lg:h-14 rounded-full mb-4"
       />
-      <h3 className={`text-white text-sm lg:text-base ${h3ClasStyles}`}>
+      <h3
+        onClick={() => router.push(`/profile/${user.username}`)}
+        className={`text-white text-sm lg:text-base ${h3ClasStyles}`}
+      >
         {user.username}
       </h3>
       <p className="text-gray-400 text-[.75rem] lg:text-sm leading-5 lg:leading-normal">

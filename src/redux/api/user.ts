@@ -4,9 +4,15 @@ import { UserTypes } from "@/types/types";
 
 export const usersApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getUserProfile: build.query<UserTypes, "">({
-      query: () => ({
-        url: `/user/profile`,
+    getUserProfile: build.query<UserTypes, { username?: string }>({
+      query: ({ username = "" }) => ({
+        url: `/user/profile${username}`,
+      }),
+      providesTags: ["User"],
+    }),
+    getUserPosts: build.query({
+      query: ({ username = "" }) => ({
+        url: `/post${username}`,
       }),
       providesTags: ["User"],
     }),
@@ -38,4 +44,5 @@ export const {
   useGetUsersQuery,
   useFollorUserMutation,
   useUnFollowUserMutation,
+  useGetUserPostsQuery,
 } = usersApi;

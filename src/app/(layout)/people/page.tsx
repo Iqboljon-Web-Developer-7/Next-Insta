@@ -12,8 +12,6 @@ const page = () => {
   const [limit, setLimit] = useState(12);
   const { data: Users, refetch } = useGetUsersQuery({ limit });
 
-  console.log(Users);
-
   const OPTIONS: EmblaOptionsType = { dragFree: true };
 
   return (
