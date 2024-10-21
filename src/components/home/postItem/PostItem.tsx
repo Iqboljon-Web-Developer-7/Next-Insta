@@ -35,7 +35,7 @@ const PostItem: React.FC<PostProps> = ({ post }) => {
             <div className="overflow-hidden rounded-lg">
               <Zoom>
                 <img
-                  src={post.content![0]}
+                  src={post.content[0].url}
                   alt={post.content_alt}
                   className="w-full h-64 object-cover"
                 />
