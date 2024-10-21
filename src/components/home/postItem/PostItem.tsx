@@ -9,8 +9,11 @@ import { FaRegHeart } from "react-icons/fa";
 import commentsImg from "@/assets/post/messages.svg";
 import forwardImg from "@/assets/post/forward.svg";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const PostItem: React.FC<PostProps> = ({ post }) => {
+  const router = useRouter();
+
   return (
     post?.content.length > 0 && (
       <div className="text-slate-200 p-4 rounded-lg shadow-lg mb-6 border border-slate-800">
@@ -21,7 +24,12 @@ const PostItem: React.FC<PostProps> = ({ post }) => {
             className="w-10 h-10 rounded-full mr-3"
           />
           <div>
-            <h4 className="font-semibold">{post?.owner.username}</h4>
+            <h4
+              className="font-semibold"
+              onClick={() => router.push(`/profile/${post?.owner.username}`)}
+            >
+              {post?.owner.username}
+            </h4>
             <p className="text-xs text-gray-400">{post?.updatedAt}</p>
           </div>
         </div>
