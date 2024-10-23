@@ -19,6 +19,15 @@ interface UserHelperType {
 const User = ({ user, h3ClasStyles }: UserHelperType) => {
   const [loadingUser, setLoadingUser] = useState<string | null>(null);
 
+  const fallbackImage =
+    "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png";
+
+  const handleImageError = (
+    event: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    event.currentTarget.src = fallbackImage; // Set the fallback image
+  };
+
   const router = useRouter();
   const userData = useSelector(
     (state: { user: { userInfo: { _id: string } } }) => state.user.userInfo
@@ -55,6 +64,7 @@ const User = ({ user, h3ClasStyles }: UserHelperType) => {
           user.photo ||
           "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
         }
+        onError={handleImageError}
         alt={user.fullName}
         className="w-10 h-10 lg:w-14 lg:h-14 rounded-full mb-4"
       />

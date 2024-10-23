@@ -26,7 +26,7 @@ const page = () => {
 
   return (
     <main className="text-2xl w-full flex">
-      <section className="flex-grow-[6] flex flex-col py-12 px-8">
+      <section className="flex-grow-[6] flex flex-col py-10 px-8">
         <Stories />
         <div className="filtering flex items-center justify-between my-10">
           <h2 className="text-3xl font-bold flex-grow-[4]">Home Feed</h2>
@@ -44,29 +44,27 @@ const page = () => {
             </SelectContent>
           </Select>
         </div>
-        <div>
-          {posts ? (
-            <div className="max-h-screen overflow-y-auto">{postsResponse}</div>
-          ) : (
-            new Array(3).fill(3).map((_, idx) => (
-              <div key={idx} className="animate-pulse p-8">
-                <div className="flex items-center gap-4 mb-1">
-                  <div className="bg-slate-800 h-10 w-10 rounded-full"></div>
-                  <div className="bg-slate-800 h-8 w-3/4 rounded"></div>
-                </div>
-                <div className="bg-slate-800 h-6 w-1/2 rounded my-4"></div>
-
-                <div className="bg-slate-800 h-64 w-full rounded mb-4"></div>
-
-                <div className="flex space-x-2">
-                  <div className="bg-slate-800 h-8 w-9 rounded-full"></div>
-                  <div className="bg-slate-800 h-8 w-9 rounded-full"></div>
-                  <div className="bg-slate-800 h-8 w-9 rounded-full"></div>
-                </div>
+        {posts ? (
+          <div className="max-h-screen overflow-y-auto">{postsResponse}</div>
+        ) : (
+          new Array(3).fill(3).map((_, idx) => (
+            <div key={idx} className="animate-pulse p-8">
+              <div className="flex items-center gap-4 mb-1">
+                <div className="bg-slate-800 h-10 w-10 rounded-full"></div>
+                <div className="bg-slate-800 h-8 w-3/4 rounded"></div>
               </div>
-            ))
-          )}
-        </div>
+              <div className="bg-slate-800 h-6 w-1/2 rounded my-4"></div>
+
+              <div className="bg-slate-800 h-64 w-full rounded mb-4"></div>
+
+              <div className="flex space-x-2">
+                <div className="bg-slate-800 h-8 w-9 rounded-full"></div>
+                <div className="bg-slate-800 h-8 w-9 rounded-full"></div>
+                <div className="bg-slate-800 h-8 w-9 rounded-full"></div>
+              </div>
+            </div>
+          ))
+        )}
       </section>
       <Users />
     </main>

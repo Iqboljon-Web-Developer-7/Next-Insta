@@ -13,6 +13,14 @@ import { useRouter } from "next/navigation";
 
 const PostItem: React.FC<PostProps> = ({ post }) => {
   const router = useRouter();
+  const fallbackImage =
+    "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png";
+
+  const handleImageError = (
+    event: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    event.currentTarget.src = fallbackImage; // Set the fallback image
+  };
 
   return (
     post?.content.length > 0 && (
@@ -21,6 +29,7 @@ const PostItem: React.FC<PostProps> = ({ post }) => {
           <img
             src={post?.owner.photo}
             alt={post?.name}
+            onError={handleImageError}
             className="w-10 h-10 rounded-full mr-3"
           />
           <div>

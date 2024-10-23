@@ -95,7 +95,7 @@ export function ProfileForm() {
             duration: 1400,
             style: {
               color: "#EF4444",
-              backgroun: "#000000",
+              background: "#000000",
               borderColor: "#000000",
             },
           });
@@ -105,7 +105,7 @@ export function ProfileForm() {
             duration: 1400,
             style: {
               color: "#EF4444",
-              backgroun: "#000000",
+              background: "#000000",
               borderColor: "#000000",
             },
           });
