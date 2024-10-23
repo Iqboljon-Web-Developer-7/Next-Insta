@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import usersImg from "@/assets/people/people.svg";
 import Image from "next/image";
 import { useGetUsersQuery } from "@/redux/api/user";
-import EmblaCarousel from "@/components/infiniteScroll/InfiniteScroll";
+import EmblaCarousel from "@/components/carousels/infiniteCarousel/InfiniteScroll";
 import { EmblaOptionsType } from "embla-carousel";
 
 const page = () => {
@@ -16,7 +16,7 @@ const page = () => {
 
   return (
     <div className="w-full max-h-screen flex flex-col">
-      <div className="users__info flex items-center gap-4 font-semibold text-4xl mt-12 mx-6">
+      <div className="users__info flex items-center gap-4 font-semibold text-4xl mt-14 mx-10">
         <Image
           src={usersImg.src}
           className="max-w-8"
@@ -26,14 +26,17 @@ const page = () => {
         />
         All Users
       </div>
-      <div className="flex gap-2 sm:gap-6 md:gap-12 p-10 pt-0 mt-10 self-stretch overflow-y-auto">
-        <EmblaCarousel
-          options={OPTIONS}
-          slides={Users!}
-          refetch={refetch}
-          setLimit={setLimit}
-        />
-      </div>
+      {/* <div
+        className="flex gap-2 sm:gap-6 md:gap-12 p-3 sm:p-10 pt-0 mt-5 md:mt-10 self-stretch overflow-hidden
+      "
+      > */}
+      <EmblaCarousel
+        options={OPTIONS}
+        slides={Users!}
+        refetch={refetch}
+        setLimit={setLimit}
+      />
+      {/* </div> */}
     </div>
   );
 };

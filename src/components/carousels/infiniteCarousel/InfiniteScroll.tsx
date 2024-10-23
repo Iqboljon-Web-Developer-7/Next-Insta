@@ -12,8 +12,7 @@ import "./styles/base.scss";
 
 import "./styles/embla.scss";
 import { UserTypes } from "@/types/types";
-import User from "../util/user/User";
-import { useGetUsersQuery } from "@/redux/api/user";
+import User from "@/components/util/user/User";
 import {
   BaseQueryFn,
   FetchArgs,
@@ -22,17 +21,6 @@ import {
   QueryDefinition,
   RetryOptions,
 } from "@reduxjs/toolkit/query";
-
-const mockApiCall = (
-  minWait: number,
-  maxWait: number,
-  callback: () => void
-): void => {
-  const min = Math.ceil(minWait);
-  const max = Math.floor(maxWait);
-  const wait = Math.floor(Math.random() * (max - min + 1)) + min;
-  setTimeout(callback, wait);
-};
 
 type PropType = {
   slides: UserTypes[];
@@ -60,16 +48,9 @@ type PropType = {
 const EmblaCarousel: React.FC<PropType> = (props) => {
   const { options, slides: propSlides, refetch, setLimit } = props;
 
-  console.log(propSlides);
-
-  // const [limit, setLimit] = useState(9);
-
-  // const { data: Users, refetch } = useGetUsersQuery({ limit });
-
   const scrollListenerRef = useRef<() => void>(() => undefined);
   const listenForScrollRef = useRef(true);
   const hasMoreToLoadRef = useRef(true);
-  const [slides, setSlides] = useState(propSlides);
   const [hasMoreToLoad, setHasMoreToLoad] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
 
@@ -165,20 +146,21 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   }, [hasMoreToLoad]);
 
   return (
-    <div className="embla w-full h-80vh">
+    <div className="embla w-full h-75vh">
       <div className="embla__viewport h-full" ref={emblaRef}>
-        <div className="embla__container text-white max-h-[40rem]">
+        <div className={`embla__container text-white max-h-[40rem] relative`}>
           {propSlides?.map((user, index) => (
-            <div className="embla__slide">
+            <div
+              className="embla__slide rounded-lg border border-slate-800"
+              key={index}
+            >
               <User user={user} />
             </div>
           ))}
           {hasMoreToLoad && (
             <div
               className={"embla-infinite-scroll".concat(
-                loadingMore
-                  ? " embla-infinite-scroll--loading-more col-span-3 bg-red-300"
-                  : ""
+                loadingMore ? " embla-infinite-scroll--loading-more" : ""
               )}
             >
               <span className="embla-infinite-scroll__spinner" />

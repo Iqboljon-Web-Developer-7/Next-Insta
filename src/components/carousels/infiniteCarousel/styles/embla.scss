@@ -10,13 +10,20 @@
 
 .embla__container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: var(--slide-height);
-  gap: var(--slide-spacing);
+  grid-template-columns: repeat(3, 3fr);
+  gap: 1.75rem;
+  @media (max-width: 46.25rem) {
+    grid-template-columns: repeat(2, 2fr);
+    gap: 1rem;
+  }
+  @media (max-width: 26.25rem) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .embla__slide {
-  transform: translate3d(0, 0, 0);
+  width: auto;
+  // transform: translate3d(0, 0, 0);
   flex: 0 0 var(--slide-width);
   min-width: 0;
 }

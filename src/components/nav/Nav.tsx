@@ -26,8 +26,10 @@ import SettingsImg from "@/assets/nav/Settings.svg";
 import IndicatorImg from "@/assets/nav/indicator.svg";
 
 import "./styles.scss";
-import { toast } from "react-toastify";
+
 import { useGetUserProfileQuery } from "@/redux/api/user";
+import { useDispatch } from "react-redux";
+import { saveUserInfo } from "@/redux/slices/userInfo";
 
 const links = [
   { href: "/", imgSrc: HomeImg.src, label: "Home" },
@@ -40,24 +42,27 @@ const links = [
 ];
 
 const Nav = () => {
+  const { data, isError } = useGetUserProfileQuery({});
+
+  const dispatch = useDispatch();
+
+  if (data) {
+    dispatch(saveUserInfo({ data }));
+  }
+
+  const [isOpen, setIsOpen] = useState(true);
+  const [profileImg, setProfileImg] = useState(data?.photo);
+
   const pathname = usePathname();
   const router = useRouter();
-
-  const { data, isError } = useGetUserProfileQuery({});
 
   isError && redirect("/auth/login");
 
   const handleLogOut = () => {
-    toast("Logged out", {
-      autoClose: 1250,
-      position: "bottom-right",
-      theme: "dark",
-    });
     localStorage.clear();
     router.push("/auth/login");
   };
 
-  const [isOpen, setIsOpen] = useState(true);
   useEffect(() => {
     window.innerWidth < 1222 && setIsOpen(false);
 
@@ -70,121 +75,131 @@ const Nav = () => {
 
   return (
     <div
-      className={`navigation bg-black transition-all ${
+      className={`navigation min-h-screen bg-black text-white transition-all ${
         isOpen && "min-w-[17rem] w-[17rem]"
-      } min-h-screen text-white flex flex-col justify-between border-e border-[#4f4f4f4f]`}
+      } border-e border-[#4f4f4f4f]`}
     >
-      <div>
-        <Image
-          src={isOpen ? websiteLogo.src : LogoImg.src}
-          alt="website logo"
-          width={120}
-          height={120}
-          className={`pb-0 ${
-            isOpen ? "w-52 p-[2.5rem_1.5rem]" : "w-10 m-4 mx-auto"
-          }`}
-          priority
-        />
-        <div
-          className={`userProfile my-[2rem] px-4 flex gap-3 overflow-hidden relative ${
-            isOpen && "custom-shadow"
-          }`}
-        >
-          <img
-            src={
-              data?.photo ||
-              "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
-            }
-            className="w-14 h-14 rounded-full flex-shrink-0"
-            alt="user image"
+      <div className="overflow-y-auto h-full flex flex-col justify-between">
+        <div>
+          <Image
+            src={isOpen ? websiteLogo.src : LogoImg.src}
+            alt="website logo"
+            width={120}
+            height={120}
+            className={`pb-0 ${
+              isOpen ? "w-52 p-[2.5rem_1.5rem]" : "w-10 m-4 mx-auto"
+            }`}
+            priority
           />
-          <div className={`userProfile__info ${!isOpen && "hidden"} relative`}>
-            <h2
-              className="font-semibold"
-              onClick={() => router.push(`/profile/${data?.username}`)}
+          <div
+            className={`userProfile my-[1.75rem] px-4 flex gap-3 overflow-hidden relative ${
+              isOpen && "custom-shadow"
+            }`}
+            onClick={() => router.push(`/profile/${data?.username}`)}
+          >
+            <img
+              src={
+                profileImg ||
+                "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
+              }
+              onError={() =>
+                setProfileImg(
+                  "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
+                )
+              }
+              className="max-w-14 max-h-14 rounded-full flex-shrink-0"
+              alt="user image"
+            />
+            <div
+              className={`userProfile__info ${!isOpen && "hidden"} relative`}
             >
-              {data?.username}
-            </h2>
-            <p className="text-[#7878A3] line-clamp-1">{data?.email}</p>
-          </div>
-        </div>
-        <nav className="navigation__main flex items-start justify-center gap-2 flex-col">
-          {links.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className={`
-              font-semibold w-full px-4 relative nav__link group`}
-            >
-              <img
-                src={IndicatorImg.src}
-                alt="indicator img"
-                className={`absolute w-8 h-full -left-3 top-0 opacity-0 group-hover:opacity-100 ${
-                  pathname === link.href ? "opacity-100" : ""
-                } duration-300`}
-              />
-              <span
-                className={`${
-                  pathname === link.href ? "bg-[#877EFF]" : ""
-                } hover:bg-[#877EFF] duration-300 w-full p-4 rounded-xl text-[1.125rem] flex gap-4`}
+              <h2
+                className="font-semibold"
+                onClick={() => router.push(`/profile/${data?.username}`)}
               >
-                <Image
-                  src={link.imgSrc}
-                  alt={`nav ${link.label} img`}
-                  width={0}
-                  height={0}
-                  className={`max-w-6 group-hover:invert group-hover:brightness-0 ${
-                    pathname === link.href ? "brightness-0 invert" : ""
-                  }`}
+                {data?.username}
+              </h2>
+              <p className="text-[#7878A3] line-clamp-1">{data?.email}</p>
+            </div>
+          </div>
+          <nav className="navigation__main flex items-start justify-center gap-2 flex-col">
+            {links.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className={`
+              font-semibold w-full px-4 relative nav__link group`}
+              >
+                <img
+                  src={IndicatorImg.src}
+                  alt="indicator img"
+                  className={`absolute w-8 h-full -left-3 top-0 opacity-0 group-hover:opacity-100 ${
+                    pathname === link.href ? "opacity-100" : ""
+                  } duration-300`}
                 />
+                <span
+                  className={`${
+                    pathname === link.href ? "bg-[#877EFF]" : ""
+                  } hover:bg-[#877EFF] duration-300 w-full p-4 rounded-xl text-[1.125rem] flex gap-4`}
+                >
+                  <Image
+                    src={link.imgSrc}
+                    alt={`nav ${link.label} img`}
+                    width={0}
+                    height={0}
+                    className={`w-6 min-w-6 group-hover:invert group-hover:brightness-0 ${
+                      pathname === link.href ? "brightness-0 invert" : ""
+                    }`}
+                  />
 
-                {isOpen && link.label}
-              </span>
-            </Link>
-          ))}
-        </nav>
-      </div>
-      <div className="subNav flex-center flex-col gap-2 py-2">
-        <button
-          onClick={() => handleLogOut()}
-          className={`font-semibold w-full px-4 relative nav__link group`}
-        >
-          <span
-            className={`hover:bg-[#ef3a3a] duration-300 w-full p-4 rounded-xl text-[1.125rem] flex gap-4`}
+                  {isOpen && link.label}
+                </span>
+              </Link>
+            ))}
+          </nav>
+        </div>
+        <div className="subNav flex-center flex-col gap-2 py-2">
+          <button
+            onClick={() => handleLogOut()}
+            className={`font-semibold w-full px-4 relative nav__link group`}
           >
-            <Image
-              src={LogoutImg.src}
-              alt={`nav logout img`}
-              width={0}
-              height={0}
-              className={`max-w-6 group-hover:invert group-hover:brightness-0 ${
-                pathname === "/logout" ? "brightness-0 invert" : ""
-              }`}
-            />
-            {isOpen && "Logout"}
-          </span>
-        </button>
-        <Link
-          href={"/settings"}
-          className={`font-semibold w-full px-4 relative nav__link group`}
-        >
-          <span
-            className={`${
-              pathname == "/settings" && "bg-[#877EFF]"
-            } hover:bg-[#877EFF] duration-300 p-4 rounded-xl text-[1.125rem] flex gap-4 px-4`}
+            <span
+              className={`hover:bg-[#ef3a3a] duration-300 w-full p-4 rounded-xl text-[1.125rem] flex gap-4`}
+            >
+              <Image
+                src={LogoutImg.src}
+                alt={`nav logout img`}
+                width={0}
+                height={0}
+                className={`max-w-6 group-hover:invert group-hover:brightness-0 ${
+                  pathname === "/logout" ? "brightness-0 invert" : ""
+                }`}
+              />
+              {isOpen && "Logout"}
+            </span>
+          </button>
+          <Link
+            href={"/settings"}
+            className={`font-semibold w-full px-4 relative nav__link group`}
           >
-            <Image
-              src={SettingsImg.src}
-              alt={`nav logout img`}
-              width={0}
-              height={0}
-              className={`max-w-6 group-hover:invert group-hover:brightness-0 ${
-                pathname === "/settings" ? "brightness-0 invert" : ""
-              }`}
-            />
-            {isOpen && "Settings"}
-          </span>
-        </Link>
+            <span
+              className={`${
+                pathname == "/settings" && "bg-[#877EFF]"
+              } hover:bg-[#877EFF] duration-300 p-4 rounded-xl text-[1.125rem] flex gap-4 px-4`}
+            >
+              <Image
+                src={SettingsImg.src}
+                alt={`nav logout img`}
+                width={0}
+                height={0}
+                className={`max-w-6 group-hover:invert group-hover:brightness-0 ${
+                  pathname === "/settings" ? "brightness-0 invert" : ""
+                }`}
+              />
+              {isOpen && "Settings"}
+            </span>
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -16,10 +16,10 @@ import Image from "next/image";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 
+import { useSelector } from "react-redux";
+
 const page = () => {
   const [loadingUser, setLoadingUser] = useState<string | null>(null);
-
-  const { data: userData, isError } = useGetUserProfileQuery({});
 
   const [follorUser] = useFollorUserMutation();
   const [unfollowUser] = useUnFollowUserMutation();
@@ -47,12 +47,13 @@ const page = () => {
   const { data: userPosts } = useGetUserPostsQuery({ username });
   const params = useParams();
 
+  const userData = useSelector(
+    (state: { user: { _id: string } }) => state.user
+  );
+
   useEffect(() => {
     setUsername(`/${params.user}`);
   }, [params]);
-
-  console.log(data);
-  console.log(userPosts);
 
   return (
     <div className="px-8">

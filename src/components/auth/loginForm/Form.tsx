@@ -1,14 +1,18 @@
 "use client";
 
+import { useState } from "react";
+
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { Eye, EyeClosed } from "lucide-react";
+
 import "@/scss/util/_loader.scss";
 
 const formSchema = z.object({
-  username: z.string().min(2).max(50),
-  password: z.string().min(2).max(50),
+  username: z.string().min(4).max(50),
+  password: z.string().min(4).max(50),
 });
 
 import { Button } from "@/components/ui/button";
@@ -23,15 +27,20 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { useToast } from "@/components/ui/useToast";
 import { useLoginUserMutation } from "@/redux/api/auth/login";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/slices/check";
 
 export function ProfileForm() {
+  const { toast } = useToast();
+
   const dispatch = useDispatch();
 
   const router = useRouter();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const toggleShowPassword = () => setShowPassword((p) => !p);
 
   const [loginUser, { isLoading }] = useLoginUserMutation();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,7 +50,6 @@ export function ProfileForm() {
     loginUser({ body: values })
       .unwrap()
       .then((data) => {
-        toast.success("Successfully Logged In!");
         dispatch(login({ token: data.accessToken }));
         localStorage.setItem("insta-x-token", data.accessToken);
         localStorage.setItem(
@@ -52,10 +60,26 @@ export function ProfileForm() {
         router.push("/");
       })
       .catch((error) => {
-        if (typeof error.data.message == "object") {
-          toast.error(error.data.message[0]);
+        if (typeof error.data.message === "object") {
+          toast({
+            title: error.data.message[0],
+            duration: 1400,
+            style: {
+              color: "#EF4444",
+              background: "#000000",
+              borderColor: "#000000",
+            },
+          });
         } else {
-          toast.error(error.data.message);
+          toast({
+            title: error.data.message,
+            duration: 1400,
+            style: {
+              color: "#EF4444",
+              background: "#000000",
+              borderColor: "#000000",
+            },
+          });
         }
       });
   }
@@ -71,9 +95,8 @@ export function ProfileForm() {
               <FormLabel className="text-[#EFEFEF]">Username</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="username"
                   {...field}
-                  className="border-none bg-[#1F1F22] placeholder:text-slate-300 rounded-sm py-6 ps-4"
+                  className="border-none bg-[#1F1F22] rounded-sm py-6 ps-4"
                 />
               </FormControl>
               <FormMessage className="text-red-400" />
@@ -87,12 +110,24 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel className="text-[#EFEFEF]">Password</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  placeholder="password"
-                  {...field}
-                  className="border-none bg-[#1F1F22] placeholder:text-slate-300 rounded-sm py-6 ps-4"
-                />
+                <div className="flex items-center justify-between relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    {...field}
+                    className="border-none bg-[#1F1F22] rounded-sm py-6 ps-4"
+                  />
+                  {showPassword ? (
+                    <EyeClosed
+                      onClick={toggleShowPassword}
+                      className="absolute right-3"
+                    />
+                  ) : (
+                    <Eye
+                      onClick={toggleShowPassword}
+                      className="absolute right-3"
+                    />
+                  )}
+                </div>
               </FormControl>
               <FormMessage className="text-red-400" />
             </FormItem>
@@ -100,7 +135,7 @@ export function ProfileForm() {
         />
         <Button
           type="submit"
-          className="bg-[#877EFF] w-full py-5 rounded-[.3rem]"
+          className="bg-[#877EFF] w-full py-5 rounded-[.3rem] font-semibold"
         >
           {isLoading ? <div className="loader"></div> : "Login"}
         </Button>

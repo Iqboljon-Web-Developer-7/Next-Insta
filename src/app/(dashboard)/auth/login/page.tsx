@@ -2,7 +2,7 @@ import { ProfileForm } from "@/components/auth/loginForm/Form";
 import Link from "next/link";
 import React, { FC } from "react";
 
-const page: FC<{ params: { locale: string } }> = ({ params: { locale } }) => {
+const page: FC<{ params: { locale: string } }> = () => {
   return (
     <div className="w-full md:w-1/2 flex flex-col justify-center p-8">
       <div className="max-w-[400px] mx-auto">
@@ -16,7 +16,7 @@ const page: FC<{ params: { locale: string } }> = ({ params: { locale } }) => {
         <p className="mt-6 text-center">
           <span className="font-light"> Don't have an account? </span>
           <Link href={"/auth/register"}>
-            <span className="text-purple-500 hover:underline font-medium">
+            <span className="text-[#877EFF] hover:underline font-semibold">
               Sign up
             </span>
           </Link>

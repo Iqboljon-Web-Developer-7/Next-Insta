@@ -1,11 +1,12 @@
 "use client";
+import React, { FormEvent, useState } from "react";
 
-import React, { FormEvent, SetStateAction, useEffect, useState } from "react";
-
+// Components
 import Image from "next/image";
 import LocationDisplay from "@/components/geoAddress/GeoAddress";
 import FileUpload from "@/components/fileUpload/FileUpload";
 
+// Images
 import galleryImage from "@/assets/post/galler-icon.svg";
 import locationImage from "@/assets/post/location-icon.svg";
 import { useCreatePostMutation } from "@/redux/api/Post";
@@ -13,10 +14,13 @@ import { useCreatePostMutation } from "@/redux/api/Post";
 import { useRouter } from "next/navigation";
 
 const CreatePost = () => {
-  const [files, setFiles] = useState<{ content: string[] }>({ content: [] });
   const [createPost, { isLoading }] = useCreatePostMutation();
-  const [location, setLocation] = useState("");
+
   const [ready, setReady] = useState(false);
+
+  const [files, setFiles] = useState<{ content: string[] }>({ content: [] });
+
+  const [location, setLocation] = useState("");
 
   const router = useRouter();
 
@@ -43,8 +47,6 @@ const CreatePost = () => {
         router.push("/");
       });
   };
-
-  useEffect(() => {}, [files]);
 
   return (
     <div className="min-h-screen grid md:grid-cols-[4fr_2fr] w-full text-white lg:p-6">

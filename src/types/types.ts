@@ -58,3 +58,13 @@ export interface postTypes {
   comments_count: number;
   shares_count: number;
 }
+
+export interface FileTypes {
+  setFiles: React.Dispatch<React.SetStateAction<{ content: string[] }>>;
+  ready: boolean;
+  setReady: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface itemTypes {
+  url: string;
+}

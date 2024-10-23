@@ -8,8 +8,8 @@ const layout = ({
   children: ReactNode;
 }>) => {
   return (
-    <div className=" bg-black text-white">
-      <div className="mx-auto max-w-screen-2xl flex min-h-screen">
+    <div className=" bg-black text-slate-200">
+      <div className="mx-auto flex min-h-screen">
         {children}
         <div
           className="hidden md:flex w-1/2 bg-gray-900 bg-no-repeat bg-center bg-cover"

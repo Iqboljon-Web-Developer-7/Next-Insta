@@ -1,36 +1,28 @@
 "use client";
 
-import photoVideosImg from "@/assets/post/images-videos.svg";
-import Image from "next/image";
 import React, { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
 
-import { IoCheckmarkCircle } from "react-icons/io5";
+import Image from "next/image";
+import { Button } from "../ui/button";
+
+import { useDropzone } from "react-dropzone";
 
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { Button } from "../ui/button";
+
 import { useUploadFilesMutation } from "@/redux/api/Post";
 
-interface FileTypes {
-  setFiles: React.Dispatch<React.SetStateAction<{ content: string[] }>>;
-  ready: boolean;
-  setReady: React.Dispatch<React.SetStateAction<boolean>>;
-}
-interface itemTypes {
-  files: itemValue[];
-}
+import { IoCheckmarkCircle } from "react-icons/io5";
+import photoVideosImg from "@/assets/post/images-videos.svg";
 
-interface itemValue {
-  url: string[];
-}
+import { FileTypes, itemTypes } from "@/types/types";
 
 const FileUpload: React.FC<FileTypes> = ({ setFiles, ready, setReady }) => {
   const [uploadFiles, { isLoading, isSuccess }] = useUploadFilesMutation();
+
   const [images, setImages] = useState<File[]>([]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    console.log("Files:", acceptedFiles);
     setImages((prev) => [...prev, ...acceptedFiles]);
   }, []);
 
@@ -40,6 +32,7 @@ const FileUpload: React.FC<FileTypes> = ({ setFiles, ready, setReady }) => {
 
   const handleFileUploading = () => {
     const formData = new FormData();
+
     images.forEach((file) => {
       formData.append("files", file);
     });
@@ -49,11 +42,8 @@ const FileUpload: React.FC<FileTypes> = ({ setFiles, ready, setReady }) => {
       .then((data) => {
         setReady(true);
         let result = {
-          content: [],
+          content: data.files.map((item: itemTypes[]) => item[0].url),
         };
-        // @ts-ignore
-        result.content = data.files.map((item: itemTypes[]) => item[0].url);
-        console.log(result.content);
         setFiles(result);
       });
   };

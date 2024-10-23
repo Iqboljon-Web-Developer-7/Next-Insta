@@ -1,25 +1,17 @@
 "use client";
 
-import localFont from "next/font/local";
 import "./globals.scss";
 import "@/scss/main.scss";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { Provider } from "react-redux";
 import { store } from "@/redux";
+
+import { Toaster } from "@/components/ui/toaster";
+
+import { Suspense } from "react";
 
 export default function RootLayout({
   children,
@@ -33,14 +25,18 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.png" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-Inter bg-black text-slate-200 overflow-hidden`}
+        className={`antialiased font-Inter bg-black text-slate-200 overflow-hidden`}
       >
-        <Provider store={store}>{children}</Provider>
-        <ToastContainer
-          autoClose={1500}
-          position={"bottom-right"}
-          theme={"dark"}
-        />
+        <Suspense
+          fallback={
+            <p className="text-center p-8 text-slate-200">
+              Website is loading. Please wait....
+            </p>
+          }
+        >
+          <Provider store={store}>{children}</Provider>
+        </Suspense>
+        <Toaster />
       </body>
     </html>
   );

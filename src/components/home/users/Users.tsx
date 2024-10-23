@@ -1,9 +1,10 @@
 "use client";
+import "./styles.scss";
 import React from "react";
+
 import { useGetUsersQuery } from "@/redux/api/user";
 import { UserTypes } from "@/types/types";
 
-import "./styles.scss";
 import User from "@/components/util/user/User";
 
 const Users: React.FC = () => {
@@ -16,7 +17,7 @@ const Users: React.FC = () => {
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4 self-stretch mt-[2rem] overflow-y-auto overflow-x-hidden users__wrapper">
         {data
-          ? data?.map((user: UserTypes, idx: number) => (
+          ? data.map((user: UserTypes, idx: number) => (
               <User key={idx} user={user} />
             ))
           : new Array(8).fill(8).map((_, idx) => (

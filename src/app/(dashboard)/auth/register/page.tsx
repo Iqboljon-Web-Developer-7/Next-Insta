@@ -16,7 +16,7 @@ const page = () => {
         <p className="mt-6 text-center">
           <span className="font-light"> Have an account? </span>
           <Link href={"/auth/login"}>
-            <span className="text-purple-500 hover:underline font-medium">
+            <span className="text-[#877EFF] hover:underline font-semibold">
               Log in
             </span>
           </Link>
