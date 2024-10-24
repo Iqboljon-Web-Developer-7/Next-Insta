@@ -1,7 +1,7 @@
 .embla {
   margin: auto;
-  --slide-spacing: 1rem;
-  --slide-width: calc(100% / 3 - var(--slide-spacing)); // Width for 3 columns
+  // --slide-spacing: 1rem;
+  --slide-width: calc(100% / 4);
 }
 
 .embla__viewport {
@@ -23,7 +23,6 @@
 
 .embla__slide {
   width: auto;
-  // transform: translate3d(0, 0, 0);
   flex: 0 0 var(--slide-width);
   min-width: 0;
 }

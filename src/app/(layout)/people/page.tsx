@@ -26,17 +26,12 @@ const page = () => {
         />
         All Users
       </div>
-      {/* <div
-        className="flex gap-2 sm:gap-6 md:gap-12 p-3 sm:p-10 pt-0 mt-5 md:mt-10 self-stretch overflow-hidden
-      "
-      > */}
       <EmblaCarousel
         options={OPTIONS}
         slides={Users!}
         refetch={refetch}
         setLimit={setLimit}
       />
-      {/* </div> */}
     </div>
   );
 };

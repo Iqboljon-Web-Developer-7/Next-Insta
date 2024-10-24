@@ -10,9 +10,6 @@ const Stories = () => {
   const userInfo = useSelector((state: { user: {} }) => state.user);
   const { data } = useGetUsersQuery({});
 
-  console.log(userInfo);
-  console.log(data);
-
   const OPTIONS: EmblaOptionsType = { align: "start" };
 
   return (

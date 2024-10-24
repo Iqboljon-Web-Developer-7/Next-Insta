@@ -49,7 +49,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="min-h-screen grid md:grid-cols-[4fr_2fr] w-full text-white lg:p-6">
+    <div className="min-h-screen overflow-y-auto grid md:grid-cols-[4fr_2fr] w-full text-white lg:p-6">
       <div className="mx-auto flex gap-10 w-full">
         <div className="w-full p-8 rounded-lg">
           <h2 className="text-4xl font-bold mb-6 flex gap-2">

@@ -1,12 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { EngineType } from "embla-carousel/components/Engine";
 import { EmblaCarouselType, EmblaOptionsType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
-import {
-  NextButton,
-  PrevButton,
-  usePrevNextButtons,
-} from "./InfiniteScrollBtns";
+import { usePrevNextButtons } from "./InfiniteScrollBtns";
 
 import "./styles/base.scss";
 
@@ -157,13 +152,14 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
               <User user={user} />
             </div>
           ))}
+
           {hasMoreToLoad && (
             <div
-              className={"embla-infinite-scroll".concat(
+              className={"embla-infinite-scroll ".concat(
                 loadingMore ? " embla-infinite-scroll--loading-more" : ""
               )}
             >
-              <span className="embla-infinite-scroll__spinner" />
+              <span className="embla-infinite-scroll__spinner border-slate-300 border" />
             </div>
           )}
         </div>

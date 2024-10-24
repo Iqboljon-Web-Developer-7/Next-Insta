@@ -42,7 +42,10 @@ const FileUpload: React.FC<FileTypes> = ({ setFiles, ready, setReady }) => {
       .then((data) => {
         setReady(true);
         let result = {
-          content: data.files.map((item: itemTypes[]) => item[0].url),
+          content: data.files.map((item: itemTypes[], index: number) => ({
+            type: images[index].type.split("/")[0].toUpperCase(),
+            url: item[0].url,
+          })),
         };
         setFiles(result);
       });
@@ -78,7 +81,11 @@ const FileUpload: React.FC<FileTypes> = ({ setFiles, ready, setReady }) => {
             </button>
           </div>
         ) : (
-          <div className="p-6 self-stretch relative w-full">
+          <div
+            className={`p-6 self-stretch relative w-full ${
+              isDragActive && "border-2 border-green-500"
+            }`}
+          >
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {Object.values(images).map((i, inx) => (
                 <div key={inx} className="relative group overflow-y-auto">
