@@ -10,7 +10,7 @@ import { EmblaOptionsType } from "embla-carousel";
 
 const page = () => {
   const [limit, setLimit] = useState(12);
-  const { data: Users, refetch } = useGetUsersQuery({ limit });
+  const { data: Users, refetch, isFetching } = useGetUsersQuery({ limit });
 
   const OPTIONS: EmblaOptionsType = { dragFree: true };
 
@@ -31,6 +31,7 @@ const page = () => {
         slides={Users!}
         refetch={refetch}
         setLimit={setLimit}
+        isLoading={isFetching}
       />
     </div>
   );

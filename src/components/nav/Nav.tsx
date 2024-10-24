@@ -56,10 +56,7 @@ const Nav = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  useEffect(() => {
-    isError && redirect("/auth/login");
-    dispatch(saveUserInfo({ data }));
-  }, [data, dispatch]);
+  isError && redirect("/auth/login");
 
   const handleLogOut = () => {
     localStorage.clear();
@@ -67,13 +64,13 @@ const Nav = () => {
   };
 
   useEffect(() => {
-    const handleResize = (e: Event) => {
+    window.innerWidth < 1222 && setIsOpen(false);
+
+    window.addEventListener("resize", (e) => {
       const target = e.target as Window;
       target.innerWidth < 1222 ? setIsOpen(false) : setIsOpen(true);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    });
+    return () => window.removeEventListener("resize", () => {});
   }, []);
 
   return (

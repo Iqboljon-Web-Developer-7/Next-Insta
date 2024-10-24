@@ -68,3 +68,31 @@
   --admonition-warning-rgb-value: 253, 186, 116;
   --admonition-danger-rgb-value: 220, 38, 38;
 }
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background-color: #000;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress {
+  position: absolute;
+  height: 100%;
+  width: 20%; /* Set to a smaller percentage to create a sweeping effect */
+  background-color: #877eff;
+  animation: sweeping 2s infinite;
+}
+
+@keyframes sweeping {
+  0% {
+    left: -20%; /* Start off-screen to the left */
+  }
+  50% {
+    left: 100%; /* Move across the screen to the right */
+  }
+  100% {
+    left: -20%; /* Reset to the starting position for continuous sweeping */
+  }
+}

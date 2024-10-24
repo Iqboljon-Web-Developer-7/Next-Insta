@@ -38,10 +38,11 @@ type PropType = {
     >
   >;
   setLimit: React.Dispatch<React.SetStateAction<number>>;
+  isLoading: boolean;
 };
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { options, slides: propSlides, refetch, setLimit } = props;
+  const { options, slides: propSlides, refetch, setLimit, isLoading } = props;
 
   const scrollListenerRef = useRef<() => void>(() => undefined);
   const listenForScrollRef = useRef(true);
@@ -51,7 +52,6 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     axis: "y",
-    ...options,
     ...options,
     watchSlides: (emblaApi) => {
       const reloadEmbla = (): void => {
@@ -155,11 +155,19 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 
           {hasMoreToLoad && (
             <div
-              className={"embla-infinite-scroll ".concat(
-                loadingMore ? " embla-infinite-scroll--loading-more" : ""
-              )}
+              style={{ gridColumn: "1 / 4" }}
+              className={`embla-infinite-scroll h-[32vh] embla-infinite-scroll--loading-more 
+          
+            `}
             >
-              <span className="embla-infinite-scroll__spinner border-slate-300 border" />
+              <h4 className="text-center mx-auto text-gray-600 mt-10">
+                The end :)
+              </h4>
+              <div
+                className={`progress-bar mt-10 ${isLoading ? "" : "hidden"}`}
+              >
+                <div className="progress"></div>
+              </div>
             </div>
           )}
         </div>
