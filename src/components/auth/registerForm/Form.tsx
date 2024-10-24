@@ -28,21 +28,7 @@ const formSchema = z.object({
   username: z.string().min(4).max(50),
   email: z.string().min(4).max(50),
   photo: z.instanceof(Image).optional(),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters long")
-    .max(32, "Password cannot exceed 32 characters")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-    .regex(/\d/, "Password must contain at least one number")
-    .regex(
-      /[@$!%*?&]/,
-      "Password must contain at least one special character (@, $, !, %, *, ?, &)"
-    )
-    .refine(
-      (value: string) => !/\s/.test(value),
-      "Password cannot contain spaces"
-    ),
+  password: z.string().min(2).max(50),
 });
 
 import { useToast } from "@/components/ui/useToast";
@@ -131,7 +117,6 @@ export function ProfileForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-        // @ts-ignore
         <FormField
           control={form.control}
           name="fullName"
