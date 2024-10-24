@@ -160,9 +160,6 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
           
             `}
             >
-              <h4 className="text-center mx-auto text-gray-600 mt-10">
-                The end :)
-              </h4>
               <div
                 className={`progress-bar mt-10 ${isLoading ? "" : "hidden"}`}
               >

@@ -8,6 +8,11 @@ export const usersApi = api.injectEndpoints({
         url: "/post",
       }),
     }),
+    getFollowedPosts: build.query({
+      query: ({ limit = 10 }) => ({
+        url: `/user/feed?limit=${limit}`,
+      }),
+    }),
     uploadFiles: build.mutation({
       query: ({ files }) => ({
         url: `/upload/files`,
