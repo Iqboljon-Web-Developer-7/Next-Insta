@@ -148,7 +148,7 @@ export function ProfileForm() {
           )}
         />
         <FormField
-          control={form.control}
+          control={form.control as any}
           name="username"
           render={({ field }) => (
             <FormItem>
@@ -164,7 +164,7 @@ export function ProfileForm() {
           )}
         />
         <FormField
-          control={form.control}
+          control={form.control as any}
           name="email"
           render={({ field }) => (
             <FormItem>
@@ -181,7 +181,7 @@ export function ProfileForm() {
           )}
         />
         <FormField
-          control={form.control}
+          control={form.control as any}
           name="password"
           render={({ field }) => (
             <FormItem>
@@ -211,7 +211,7 @@ export function ProfileForm() {
           )}
         />
         <FormField
-          control={form.control}
+          control={form.control as any}
           name="photo"
           render={() => (
             <FormItem>
