@@ -24,25 +24,16 @@ import { Eye, EyeClosed } from "lucide-react";
 import { useUploadFilesMutation } from "@/redux/api/Post";
 
 const formSchema = z.object({
-  fullName: z.string().min(6).max(30),
-  username: z.string().min(4).max(50),
-  email: z.string().min(4).max(50),
+  fullName: z.string().min(6).max(22),
+  username: z.string().min(4).max(22),
+  email: z.string().min(4).max(22),
   photo: z.instanceof(Image).optional(),
   password: z
     .string()
     .min(8, "Password must be at least 8 characters long")
-    .max(32, "Password cannot exceed 32 characters")
     .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
     .regex(/\d/, "Password must contain at least one number")
-    .regex(
-      /[@$!%*?&]/,
-      "Password must contain at least one special character (@, $, !, %, *, ?, &)"
-    )
-    .refine(
-      (value: string) => !/\s/.test(value),
-      "Password cannot contain spaces"
-    ),
+    .regex(/[@$!%*?&]/),
 });
 
 import { useToast } from "@/components/ui/useToast";
