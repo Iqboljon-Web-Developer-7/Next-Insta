@@ -23,17 +23,23 @@ import { ChangeEvent, useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import { useUploadFilesMutation } from "@/redux/api/Post";
 
+const nameSchema = z.string().min(6).max(22);
+const passwordSchema = z
+  .string()
+  .min(8)
+  .max(32)
+  .regex(/[A-Z]/)
+  .regex(/[a-z]/)
+  .regex(/\d/)
+  .regex(/[@$!%*?&]/)
+  .refine((value) => !/\s/, "Password cannot contain spaces");
+
 const formSchema = z.object({
-  fullName: z.string().min(6).max(22),
+  fullName: nameSchema,
   username: z.string().min(4).max(22),
   email: z.string().min(4).max(22),
   photo: z.instanceof(Image).optional(),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters long")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/\d/, "Password must contain at least one number")
-    .regex(/[@$!%*?&]/),
+  password: passwordSchema,
 });
 
 import { useToast } from "@/components/ui/useToast";
@@ -123,7 +129,7 @@ export function ProfileForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <FormField
-          control={form.control}
+          control={form.control as any}
           name="fullName"
           render={({ field }) => (
             <FormItem>
