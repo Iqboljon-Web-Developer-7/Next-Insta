@@ -37,15 +37,11 @@ const passwordSchema = z
   )
   .regex(/^\S*$/, "Password cannot contain spaces"); // Check for no spaces
 
-declare var Image: {
-  new (width?: number, height?: number): HTMLImageElement;
-};
-
 const formSchema = z.object({
   fullName: nameSchema,
   username: z.string().min(4).max(22),
   email: z.string().min(4).max(22),
-  photo: z.instanceof(Image).optional(),
+  photo: z.string().optional(),
   password: passwordSchema,
 });
 
