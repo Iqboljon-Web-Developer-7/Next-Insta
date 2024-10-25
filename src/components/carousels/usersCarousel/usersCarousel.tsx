@@ -61,13 +61,13 @@ const UserCarousel: React.FC<PropType> = (props) => {
           ))}
         </div>
         <PrevButton
-          className={`absolute left-0 top-[50%] translate-y-[-50%] max-w-6 w-6 h-6 bg-[#1D1D22] text-[#877EFF] rounded-full flex-center ${
+          className={` max-w-6 w-6 h-6 bg-[#1D1D22] text-[#877EFF] rounded-full flex-center ${
             prevBtnDisabled && "hidden"
           }`}
           onClick={onPrevButtonClick}
         />
         <NextButton
-          className={`absolute right-[-4%] top-[50%] translate-y-[-50%] max-w-6 w-6 h-6 bg-[#1D1D22] text-[#877EFF] rounded-full flex-center ${
+          className={` max-w-6 w-6 h-6 bg-[#1D1D22] text-[#877EFF] rounded-full flex-center ${
             nextBtnDisabled && "hidden"
           }`}
           onClick={onNextButtonClick}
