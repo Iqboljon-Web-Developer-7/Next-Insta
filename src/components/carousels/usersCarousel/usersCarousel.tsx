@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { EmblaOptionsType } from "embla-carousel";
 
-import "./style/embla.scss";
 import useEmblaCarousel from "embla-carousel-react";
 import { UserTypes } from "@/types/types";
 
@@ -15,6 +14,8 @@ type PropType = {
   slides: UserTypes[] | undefined;
   options?: EmblaOptionsType;
 };
+
+import "./style/embla.scss";
 
 const fallbackImage =
   "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png";
