@@ -4,7 +4,7 @@ import PostItem from "@/components/home/postItem/PostItem";
 import Stories from "@/components/home/stories/Stories";
 import Users from "@/components/home/users/Users";
 
-import { useGetPostsQuery } from "@/redux/api/Post";
+import { useGetFollowedPostsQuery, useGetPostsQuery } from "@/redux/api/Post";
 
 import { postTypes } from "@/types/types";
 
@@ -16,36 +16,49 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useState } from "react";
 
 const page = () => {
   const { data: posts } = useGetPostsQuery("");
+  const { data: followedPosts } = useGetFollowedPostsQuery({ limit: 12 });
+
+  const [isFollowedPosts, setIsFollowedPosts] = useState(false);
+
+  const handlePostFilter = (event: string) => [
+    event == "Following" ? setIsFollowedPosts(true) : setIsFollowedPosts(false),
+  ];
 
   let postsResponse = posts?.map((post: postTypes, idx: number) => (
     <PostItem key={idx} post={post} />
   ));
 
+  let followedPostsResponse = followedPosts?.posts.map(
+    (post: postTypes, idx: number) => <PostItem key={idx} post={post} />
+  );
+
   return (
-    <main className="text-2xl w-full flex">
+    <main className="text-2xl w-full flex max-w-96">
       <section className="flex-grow-[6] flex flex-col py-10 px-8">
         <Stories />
         <div className="filtering flex items-center justify-between my-10">
           <h2 className="text-3xl font-bold flex-grow-[4]">Home Feed</h2>
-          <Select>
-            <SelectTrigger className="flex-grow-[6] max-w-20">
+          <Select onValueChange={handlePostFilter}>
+            <SelectTrigger className="flex-grow-[6] max-w-32">
               <SelectValue placeholder="All" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="est">All</SelectItem>
-              <SelectItem value="cst">1</SelectItem>
-              <SelectItem value="mst">2</SelectItem>
-              <SelectItem value="pst">3</SelectItem>
-              <SelectItem value="akst">4</SelectItem>
-              <SelectItem value="hst">5</SelectItem>
+              <SelectItem value="All">All</SelectItem>
+              <SelectItem value="Following">Following</SelectItem>
             </SelectContent>
           </Select>
+          {1 ? "" : 1 == 1 ? "" : ""}
         </div>
-        {posts ? (
+        {posts && !isFollowedPosts ? (
           <div className="max-h-screen overflow-y-auto">{postsResponse}</div>
+        ) : isFollowedPosts ? (
+          <div className="max-h-screen overflow-y-auto">
+            {followedPostsResponse}
+          </div>
         ) : (
           new Array(3).fill(3).map((_, idx) => (
             <div key={idx} className="animate-pulse p-8">

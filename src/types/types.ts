@@ -46,6 +46,9 @@ export interface PostProps {
 }
 
 export interface postTypes {
+  createdAt: string;
+  _id: string;
+  likes: string[];
   name?: string;
   post?: any;
   content: { url: string; type: string }[];

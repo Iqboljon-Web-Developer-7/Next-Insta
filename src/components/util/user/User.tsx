@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import { UserTypes } from "@/types/types";
 import {
-  useFollorUserMutation,
+  useFollowUserMutation,
   useUnFollowUserMutation,
 } from "@/redux/api/user";
 
@@ -33,7 +33,7 @@ const User = ({ user, h3ClasStyles }: UserHelperType) => {
     (state: { user: { userInfo: { _id: string } } }) => state.user.userInfo
   );
 
-  const [follorUser] = useFollorUserMutation();
+  const [follorUser] = useFollowUserMutation();
   const [unfollowUser] = useUnFollowUserMutation();
 
   const handleFollow = async (username: string) => {
@@ -56,7 +56,6 @@ const User = ({ user, h3ClasStyles }: UserHelperType) => {
   return (
     <div
       key={user._id}
-      onClick={() => router.push(`/profile/${user.username}`)}
       className="w-full max-w-[18.75rem] min-w-32 mx-auto p-4 py-8 flex flex-col items-center text-center"
     >
       <img
@@ -64,11 +63,15 @@ const User = ({ user, h3ClasStyles }: UserHelperType) => {
           user.photo ||
           "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
         }
+        onClick={() => router.push(`/profile/${user.username}`)}
         onError={handleImageError}
         alt={user.fullName}
         className="w-10 h-10 lg:w-14 lg:h-14 rounded-full mb-4"
       />
-      <h3 className={`text-white text-sm lg:text-base ${h3ClasStyles}`}>
+      <h3
+        onClick={() => router.push(`/profile/${user.username}`)}
+        className={`text-white text-sm lg:text-base ${h3ClasStyles}`}
+      >
         {user.username}
       </h3>
       <p className="text-gray-400 text-[.75rem] lg:text-sm leading-5 lg:leading-normal">

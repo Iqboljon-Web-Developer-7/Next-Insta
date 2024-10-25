@@ -11,7 +11,7 @@ const Users: React.FC = () => {
   const { data } = useGetUsersQuery({});
 
   return (
-    <div className="users flex-shrink-0 min-h-screen max-h-screen max-w-[19rem] lg:max-w-[28rem] overflow-hidden px-2 lg:px-9 flex flex-col flex-grow-[1]">
+    <div className="users flex-shrink-0 min-h-screen max-h-screen max-w-[18rem] lg:max-w-[22rem] overflow-hidden px-2 lg:px-9 flex flex-col flex-grow-[1]">
       <h2 className="text-white text-2xl p-[2.5rem_1.5rem] pb-0 w-full">
         Top users
       </h2>

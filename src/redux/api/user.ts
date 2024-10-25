@@ -22,7 +22,7 @@ export const usersApi = api.injectEndpoints({
       }),
       providesTags: ["User"],
     }),
-    follorUser: build.mutation({
+    followUser: build.mutation({
       query: ({ username }) => ({
         method: "POST",
         url: `user/follow/${username}`,
@@ -42,7 +42,7 @@ export const usersApi = api.injectEndpoints({
 export const {
   useGetUserProfileQuery,
   useGetUsersQuery,
-  useFollorUserMutation,
+  useFollowUserMutation,
   useUnFollowUserMutation,
   useGetUserPostsQuery,
 } = usersApi;

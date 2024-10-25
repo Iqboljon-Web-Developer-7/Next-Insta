@@ -37,10 +37,8 @@ const UserCarousel: React.FC<PropType> = (props) => {
     onNextButtonClick,
   } = usePrevNextButtons(emblaApi);
 
-  console.log(slides);
-
   return (
-    <section className="embla flex-shrink relative w-5/6">
+    <section className="embla flex-shrink relative">
       <div className="embla__viewport ml-2" ref={emblaRef}>
         <div className="embla__container">
           {slides?.map((item, index) => (
@@ -61,13 +59,13 @@ const UserCarousel: React.FC<PropType> = (props) => {
           ))}
         </div>
         <PrevButton
-          className={` max-w-6 w-6 h-6 bg-[#1D1D22] text-[#877EFF] rounded-full flex-center ${
+          className={`absolute left-0 top-[50%] translate-y-[-50%] max-w-6 w-6 h-6 bg-[#1D1D22] text-[#877EFF] rounded-full flex-center ${
             prevBtnDisabled && "hidden"
           }`}
           onClick={onPrevButtonClick}
         />
         <NextButton
-          className={` max-w-6 w-6 h-6 bg-[#1D1D22] text-[#877EFF] rounded-full flex-center ${
+          className={`absolute right-[-4%] top-[50%] translate-y-[-50%] max-w-6 w-6 h-6 bg-[#1D1D22] text-[#877EFF] rounded-full flex-center ${
             nextBtnDisabled && "hidden"
           }`}
           onClick={onNextButtonClick}

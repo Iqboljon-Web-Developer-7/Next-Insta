@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
 import {
-  useFollorUserMutation,
+  useFollowUserMutation,
   useGetUserPostsQuery,
   useGetUserProfileQuery,
   useUnFollowUserMutation,
@@ -22,7 +22,7 @@ import { useSelector } from "react-redux";
 const page = () => {
   const [loadingUser, setLoadingUser] = useState<string | null>(null);
 
-  const [follorUser] = useFollorUserMutation();
+  const [follorUser] = useFollowUserMutation();
   const [unfollowUser] = useUnFollowUserMutation();
 
   const handleFollow = async (username: string) => {
@@ -157,8 +157,6 @@ const page = () => {
         ) : (
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {userPosts?.map((item: any) => {
-              console.log(item.content[0]);
-
               return (
                 <div>
                   {item?.content[0]?.type == "VIDEO" ? (

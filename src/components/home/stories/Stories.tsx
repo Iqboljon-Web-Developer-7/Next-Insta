@@ -7,13 +7,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 const Stories = () => {
-  const userInfo = useSelector((state: { user: {} }) => state.user);
+  // const userInfo = useSelector((state: { user: {} }) => state.user);
   const { data } = useGetUsersQuery({});
 
   const OPTIONS: EmblaOptionsType = { align: "start" };
 
   return (
-    <div className="w-full">
+    <div className="storiesCarousel">
       <UserCarousel slides={data} options={OPTIONS} />
     </div>
   );
