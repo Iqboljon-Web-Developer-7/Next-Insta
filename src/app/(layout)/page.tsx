@@ -37,7 +37,7 @@ const page = () => {
   );
 
   return (
-    <main className="text-2xl w-full flex max-w-96">
+    <main className="text-2xl w-full flex">
       <section className="flex-grow-[6] flex flex-col py-10 px-8">
         <Stories />
         <div className="filtering flex items-center justify-between my-10">

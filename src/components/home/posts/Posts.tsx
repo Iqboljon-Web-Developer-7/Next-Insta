@@ -24,7 +24,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-800 p-6">
-      <PostItem {...postData} post={postData} />
+      {/* <PostItem {...postData} post={postData} /> */}
     </div>
   );
 };
