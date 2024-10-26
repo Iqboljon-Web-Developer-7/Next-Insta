@@ -39,8 +39,8 @@ const passwordSchema = z
 
 const formSchema = z.object({
   fullName: nameSchema,
-  username: z.string().min(4).max(22),
-  email: z.string().min(4).max(22),
+  username: z.string().min(4).max(24),
+  email: z.string().min(4).max(45),
   photo: z.string().optional(),
   password: passwordSchema,
 });
