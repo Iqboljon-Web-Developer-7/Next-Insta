@@ -54,9 +54,11 @@ const page = () => {
           {1 ? "" : 1 == 1 ? "" : ""}
         </div>
         {posts && !isFollowedPosts ? (
-          <div className="max-h-screen overflow-y-auto">{postsResponse}</div>
+          <div className="max-h-screen overflow-y-auto overflow-x-hidden">
+            {postsResponse}
+          </div>
         ) : isFollowedPosts ? (
-          <div className="max-h-screen overflow-y-auto">
+          <div className="max-h-screen overflow-y-auto overflow-x-hidden">
             {followedPostsResponse}
           </div>
         ) : (

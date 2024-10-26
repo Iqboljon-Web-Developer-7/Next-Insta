@@ -81,17 +81,12 @@ const PostItem: React.FC<PostProps> = ({ post }) => {
   };
   const handleClose = () => setOpen(false);
 
-  console.log("post", postComments);
-
-  console.log(post);
-
   const dateConverter = (dateStr: string) => {
     const date = new Date(dateStr);
     const formattedDate = `${
       date.getMonth() + 1
     }/${date.getDate()}/${date.getFullYear()}`;
 
-    console.log(formattedDate); // Output: "10/19/2024"
     return formattedDate;
   };
 
@@ -109,7 +104,7 @@ const PostItem: React.FC<PostProps> = ({ post }) => {
           />
           <div>
             <h4
-              className="font-semibold"
+              className="font-semibold hover:underline underline-offset-4 cursor-pointer"
               onClick={() => router.push(`/profile/${post?.owner.username}`)}
             >
               {post?.owner.username}
@@ -156,7 +151,7 @@ const PostItem: React.FC<PostProps> = ({ post }) => {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col w-[31rem] min-h-[30rem] px-6">
+                <div className="flex flex-col w-[31rem] px-6">
                   <div className="user-infos pt-8  flex gap-2">
                     <img
                       className="max-w-11 max-h-11 rounded-full"
@@ -172,7 +167,7 @@ const PostItem: React.FC<PostProps> = ({ post }) => {
                     </div>
                   </div>
                   <h4 className="mt-4 font-bold">{post?.caption}</h4>
-                  <div className="mt-4">
+                  <div className="mt-4 overflow-y-auto">
                     {postComments ? (
                       postComments.map(
                         (item: { message: string }, idx: number) => (
@@ -213,17 +208,19 @@ const PostItem: React.FC<PostProps> = ({ post }) => {
             <div className="rounded-lg flex overflow-x-auto">
               {post.content.map((item, idx) => {
                 return item.type == "IMAGE" ? (
-                  <Zoom>
-                    <img
-                      src={post.content[0].url}
-                      alt={post.content_alt}
-                      className="w-96 h-72 object-cover flex-grow flex-shrink-0"
-                    />
-                  </Zoom>
+                  <div className="w-full flex-shrink-0">
+                    <Zoom>
+                      <img
+                        src={post.content[0].url}
+                        alt={post.content_alt}
+                        className="w-full h-72 object-cover flex-grow flex-shrink-0"
+                      />
+                    </Zoom>
+                  </div>
                 ) : (
                   <video
                     src={post.content[0].url}
-                    className="w-96 max-h-96 flex-grow flex-shrink-0"
+                    className="w-full max-h-96 flex-grow flex-shrink-0"
                     controls
                   ></video>
                 );
